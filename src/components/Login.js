@@ -26,9 +26,14 @@ function Login() {
           </svg>
         </div>
         <div className="font-normal text-4xl flex flex-col overflow-hidden">
-          <div>
+          <form
+            method="post"
+            onSubmit={() => {
+              alert("login");
+            }}
+          >
             <div className="flex flex-col items-center">
-              <label className="text-white font-extralight text-2xl pl-8 pb-3 self-start">
+              <label className="text-white font-extralight text-2xl pl-10 pb-3 self-start">
                 Email:
               </label>
               <input
@@ -37,24 +42,37 @@ function Login() {
               ></input>
             </div>
             <div className="flex flex-col items-center py-2">
-              <label className="text-white font-extralight text-2xl pl-8 pb-3 self-start">
+              <label className="text-white font-extralight text-2xl pl-10 pb-3 self-start">
                 Password:
               </label>
               <input
                 type="Password"
                 className="bg-transparent border rounded-full w-11/12"
               ></input>
-              <div className="flex flex-col items-center"></div>
+            </div>
+            <div className="flex justify-around">
               <div>
-                <button
-                  type="submit"
-                  className="bg-green-900 rounded-full mt-4 text-white font-extralight text-2xl py-2 px-5"
-                >
-                  Log In
-                </button>
+                <input type={"checkbox"}></input>
+                <label className="text-white font-extralight text-2xl pl-2 pb-3 self-start">
+                  Remember Me.
+                </label>
+              </div>
+              <div>
+                <input type={"checkbox"}></input>
+                <label className="text-white font-extralight text-2xl pl-2 pb-3 self-start">
+                  Admin.
+                </label>
               </div>
             </div>
-          </div>
+            <div className="flex justify-center">
+              <button
+                type="submit"
+                className="bg-green-900 rounded-full mt-4 text-white font-extralight text-2xl py-2 px-5"
+              >
+                Log In
+              </button>
+            </div>
+          </form>
         </div>
       </div>
     </div>
