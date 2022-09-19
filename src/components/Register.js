@@ -1,12 +1,52 @@
 import React, { useState } from "react";
-import Skill, { list } from "./Skill";
+import { Navigate } from "react-router";
+import axios from "axios";
+import { useForm } from "react-hook-form";
 
 export default function Register() {
-  const handleSubmit = () => {};
   const [SkillInput, setSkillInput] = useState("");
   const [Skills, setSkills] = useState([]);
   const [ExpInput, setExpInput] = useState("");
   const [Experience, setExperience] = useState([]);
+  const [User, setUser] = useState({
+    userid: "",
+    name: "",
+    surname: "",
+    email: "",
+    password: "",
+    mobile: "",
+    skillsets: [],
+    experience: [],
+    description: "",
+  });
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+  } = useForm();
+
+  const handleChange = (event) => {
+    setUser((User) => ({
+      ...User,
+      [event.target.name]: event.target.value,
+    }));
+  };
+
+  const handleSubmitData = (event) => {
+    alert(User);
+    event.preventDefault();
+    axios({
+      method: "post",
+      url: "http://localhost:3000/users/submit",
+      data: {
+        User,
+      },
+    }).then((response) => {
+      const token = response.data.token;
+      localStorage.setItem("token", token);
+      console.log(response.data.token);
+    });
+  };
 
   // const removeSkill = (skill) => {
   //   setSkills((Skills) => {
@@ -23,7 +63,7 @@ export default function Register() {
   const handleExpChange = (event) => {
     if (event.nativeEvent.key === "Enter") {
       const data = event.target.value.toString().split("-");
-      if (data.length == 3) {
+      if (data.length === 3) {
         console.log(data);
         setExperience([
           ...Experience,
@@ -49,7 +89,7 @@ export default function Register() {
        items-center rounded-3xl h-5/6 w-5/6 bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-30 border lg:flex overflow-scroll md:overflow-auto scrollbar-hide"
       >
         <div className="h-3/4 w-3/4 mt-2 ">
-          <form method="post" onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit(handleSubmitData)}>
             <div className="flex flex-col items-center justify-center mt-8 h-full w-full">
               <div className="row flex flex-col lg:flex-row items-center justify-around lg:gap-4 lg:w-full w-3/4">
                 <div className="col w-full lg:w-1/2 mt-2 lg:mt-0">
@@ -58,7 +98,22 @@ export default function Register() {
                   </label>
                   <input
                     type="text"
-                    className="bg-transparent border rounded-full w-full h-8 shrink focus:outline-none focus:ring focus:border-blue-500 focus:border-0 mt-2 pb-1"
+                    className={`bg-transparent border rounded-full w-full h-8 shrink focus:outline-none focus:ring focus:border-blue-500 focus:border-0 mt-2 pb-1 text-white text-xl font-extralight pl-4 
+                    ${
+                      errors.firstName &&
+                      (errors.firstName
+                        ? "ring ring-red-800 border-0 outline-none border-red-800"
+                        : "ring ring-green-500 border-0 outline-none border-red-800")
+                    }}`}
+                    placeholder={`${
+                      errors.firstName && errors.firstName
+                        ? errors.firstName.type === "required"
+                          ? "Required"
+                          : ""
+                        : ""
+                    }`}
+                    name="firstname"
+                    {...register("firstName", { required: true })}
                   ></input>
                 </div>
                 <div className="col w-full lg:w-1/2 mt-2 lg:mt-0">
@@ -67,7 +122,22 @@ export default function Register() {
                   </label>
                   <input
                     type="text"
-                    className="bg-transparent border rounded-full w-full h-8 shrink focus:outline-none focus:ring focus:border-blue-500 focus:border-0 mt-2 pb-1"
+                    className={`bg-transparent border rounded-full w-full h-8 shrink focus:outline-none focus:ring focus:border-blue-500 focus:border-0 mt-2 pb-1 text-white text-xl font-extralight pl-4 
+                    ${
+                      errors.lastName &&
+                      (errors.lastName
+                        ? "ring ring-red-800 border-0 outline-none "
+                        : "ring ring-green-500 border-0 outline-none ")
+                    }}`}
+                    placeholder={`${
+                      errors.lastName && errors.lastName
+                        ? errors.lastName.type === "required"
+                          ? "Required"
+                          : ""
+                        : ""
+                    }`}
+                    name="lastname"
+                    {...register("lastName", { required: true })}
                   ></input>
                 </div>
               </div>
@@ -79,7 +149,26 @@ export default function Register() {
                   </label>
                   <input
                     type="text"
-                    className="bg-transparent border rounded-full w-full h-8 shrink focus:outline-none focus:ring focus:border-blue-500 focus:border-0 mt-2 pb-1"
+                    className={`bg-transparent border rounded-full w-full h-8 shrink focus:outline-none focus:ring focus:border-blue-500 focus:border-0 mt-2 pb-1 text-white text-xl font-extralight pl-4 
+                    ${
+                      errors.email &&
+                      (errors.email
+                        ? "ring ring-red-800 border-0 outline-none "
+                        : "ring ring-green-500 border-0 outline-none ")
+                    }}`}
+                    placeholder={`${
+                      errors.email && errors.email
+                        ? errors.email.type === "required"
+                          ? "Required"
+                          : ""
+                        : ""
+                    }`}
+                    name="email"
+                    {...register("email", {
+                      required: true,
+                      pattern:
+                        /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                    })}
                   ></input>
                 </div>
                 <div className="col w-full lg:w-2/5 mt-2 lg:mt-0">
@@ -88,7 +177,25 @@ export default function Register() {
                   </label>
                   <input
                     type="text"
-                    className="bg-transparent border rounded-full w-full h-8 shrink focus:outline-none focus:ring focus:border-blue-500 focus:border-0 mt-2 pb-1"
+                    className={`bg-transparent border rounded-full w-full h-8 shrink focus:outline-none focus:ring focus:border-blue-500 focus:border-0 mt-2 pb-1 text-white text-xl font-extralight pl-4 
+                    ${
+                      errors.email &&
+                      (errors.email
+                        ? "ring ring-red-800 border-0 outline-none "
+                        : "ring ring-green-500 border-0 outline-none ")
+                    }}`}
+                    placeholder={`${
+                      errors.email && errors.email
+                        ? errors.email.type === "required"
+                          ? "Required"
+                          : ""
+                        : ""
+                    }`}
+                    name="mobile"
+                    {...register("mobile", {
+                      required: true,
+                      pattern: /^([987]{1})(\d{9})$/,
+                    })}
                   ></input>
                 </div>
               </div>
@@ -100,7 +207,22 @@ export default function Register() {
                   </label>
                   <input
                     type="text"
-                    className="bg-transparent border rounded-full w-full h-8 shrink focus:outline-none focus:ring focus:border-blue-500 focus:border-0 mt-2 pb-1"
+                    className={`bg-transparent border rounded-full w-full h-8 shrink focus:outline-none focus:ring focus:border-blue-500 focus:border-0 mt-2 pb-1 text-white text-xl font-extralight pl-4 
+                    ${
+                      errors.password &&
+                      (errors.password
+                        ? "ring ring-red-800 border-0 outline-none "
+                        : "ring ring-green-500 border-0 outline-none ")
+                    }}`}
+                    placeholder={`${
+                      errors.password && errors.password
+                        ? errors.password.type === "required"
+                          ? "Required"
+                          : ""
+                        : ""
+                    }`}
+                    name="password"
+                    {...register("password", { required: true })}
                   ></input>
                 </div>
                 <div className="col w-full lg:w-1/2 mt-2 lg:mt-0">
@@ -110,22 +232,23 @@ export default function Register() {
                   <input
                     type="text"
                     className="bg-transparent border rounded-full w-full h-8 shrink focus:outline-none focus:ring focus:border-blue-500 focus:border-0 mt-2 pb-1"
+                    name="confirmpassword"
+                    {...register("confirmpassword", { required: true })}
                   ></input>
                 </div>
               </div>
               {/*------------------------------------------------------------------------------------------------------------*/}
               <div className="row flex flex-col lg:flex-row items-center justify-around lg:gap-4 lg:w-full lg:mt-4 w-3/4">
                 <div className="col w-full lg:w-full mt-2 lg:mt-0">
-                  <label
-                    for="message"
-                    className="text-white font-extralight text-2xl pl-4 py-4 self-start "
-                  >
+                  <label className="text-white font-extralight text-2xl pl-4 py-4 self-start ">
                     About Me:
                   </label>
                   <textarea
                     id="message"
                     rows="4"
                     className="block p-2 w-full bg-transparent border border-white rounded-xl mt-2 text-white text-xl font-extralight pb-1"
+                    name="description"
+                    {...register("description", { required: true })}
                   ></textarea>
                 </div>
               </div>
@@ -201,6 +324,17 @@ export default function Register() {
                         );
                       })}
                   </div>
+                </div>
+              </div>
+              {/*------------------------------------------------------------------------------------------------------------*/}
+              <div className="row flex flex-col lg:flex-row items-center justify-around lg:gap-4 lg:w-full lg:mt-4 w-3/4">
+                <div className="col w-full lg:w-full mt-2 lg:mt-0">
+                  <button
+                    type="submit"
+                    className="bg-green-900 rounded-full mt-4 text-white font-extralight text-2xl py-2 px-5 pb-3"
+                  >
+                    Sign-Up
+                  </button>
                 </div>
               </div>
               {/*------------------------------------------------------------------------------------------------------------*/}

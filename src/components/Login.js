@@ -5,8 +5,8 @@ function Login() {
   return (
     <div className="flex justify-center items-center h-screen w-screen ">
       <div
-        className="flex flex-wrap justify-around
-       items-center rounded-3xl h-4/5 w-5/6 bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-30 border lg:flex md:flex"
+        className="flex flex-col flex-wrap justify-around
+       items-center rounded-3xl h-4/5 w-5/6 bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-30 border lg:flex-row "
       >
         <div className="shrink">
           <svg
@@ -33,24 +33,24 @@ function Login() {
             }}
           >
             <div className="flex flex-col items-center">
-              <label className="text-white font-extralight text-2xl pl-10 pb-3 self-start">
+              <label className="text-white font-extralight text-2xl pl-6 pb-2 self-start">
                 Email:
               </label>
               <input
                 type="text"
-                className="bg-transparent border rounded-full w-11/12 shrink "
+                className="bg-transparent border border-white rounded-full w-11/12 h-8 shrink text-white text-xl font-extralight pl-4  focus:outline-none focus:ring focus:border-blue-500 focus:border-0  pb-1"
               ></input>
             </div>
             <div className="flex flex-col items-center py-2">
-              <label className="text-white font-extralight text-2xl pl-10 pb-3 self-start">
+              <label className="text-white font-extralight text-2xl pl-6 pb-2 self-start">
                 Password:
               </label>
               <input
                 type="Password"
-                className="bg-transparent border rounded-full w-11/12"
+                className="bg-transparent border border-white rounded-full w-11/12 h-8 shrink text-white text-xl font-extralight pl-4 focus:outline-none focus:ring focus:border-blue-500 focus:border-0 pb-1"
               ></input>
             </div>
-            <div className="flex justify-around">
+            <div className="flex justify-around gap-4">
               <div>
                 <input type={"checkbox"}></input>
                 <label className="text-white font-extralight text-2xl pl-2 pb-3 self-start">
@@ -67,7 +67,7 @@ function Login() {
             <div className="flex justify-center">
               <button
                 type="submit"
-                className="bg-green-900 rounded-full mt-4 text-white font-extralight text-2xl py-2 px-5"
+                className="bg-green-900 rounded-full mt-4 text-white font-extralight text-2xl py-2 px-5 pb-3"
               >
                 Log In
               </button>
