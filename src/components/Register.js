@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { Navigate } from "react-router";
 import axios from "axios";
 import { useForm } from "react-hook-form";
@@ -23,7 +23,11 @@ export default function Register() {
     register,
     formState: { errors },
     handleSubmit,
+    watch,
   } = useForm();
+
+  const password = useRef({});
+  password.current = watch("password", "");
 
   const handleChange = (event) => {
     setUser((User) => ({
@@ -89,7 +93,7 @@ export default function Register() {
        items-center rounded-3xl h-5/6 w-5/6 bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-30 border lg:flex overflow-scroll md:overflow-auto scrollbar-hide"
       >
         <div className="h-3/4 w-3/4 mt-2 ">
-          <form onSubmit={handleSubmit(handleSubmitData)}>
+          <form>
             <div className="flex flex-col items-center justify-center mt-8 h-full w-full">
               <div className="row flex flex-col lg:flex-row items-center justify-around lg:gap-4 lg:w-full w-3/4">
                 <div className="col w-full lg:w-1/2 mt-2 lg:mt-0">
@@ -113,7 +117,9 @@ export default function Register() {
                         : ""
                     }`}
                     name="firstname"
-                    {...register("firstName", { required: true })}
+                    {...register("firstName", {
+                      required: true,
+                    })}
                   ></input>
                 </div>
                 <div className="col w-full lg:w-1/2 mt-2 lg:mt-0">
@@ -204,15 +210,24 @@ export default function Register() {
                 <div className="col w-full lg:w-1/2 mt-2 lg:mt-0">
                   <label className="text-white font-extralight text-2xl pl-4 py-4 self-start ">
                     Password:
+                    {`${
+                      errors.password && errors.password
+                        ? errors.password.type === "maxLength" ||
+                          errors.password.type === "minLength"
+                          ? " Must be 8-36 characters"
+                          : ""
+                        : ""
+                    }`}
                   </label>
                   <input
-                    type="text"
+                    type="password"
                     className={`bg-transparent border rounded-full w-full h-8 shrink focus:outline-none focus:ring focus:border-blue-500 focus:border-0 mt-2 pb-1 text-white text-xl font-extralight pl-4 
                     ${
+                      (console.log(errors.password),
                       errors.password &&
-                      (errors.password
-                        ? "ring ring-red-800 border-0 outline-none "
-                        : "ring ring-green-500 border-0 outline-none ")
+                        (errors.password
+                          ? "ring ring-red-800 border-0 outline-none "
+                          : "ring ring-green-500 border-0 outline-none "))
                     }}`}
                     placeholder={`${
                       errors.password && errors.password
@@ -222,7 +237,11 @@ export default function Register() {
                         : ""
                     }`}
                     name="password"
-                    {...register("password", { required: true })}
+                    {...register("password", {
+                      required: true,
+                      maxLength: 36,
+                      minLength: 8,
+                    })}
                   ></input>
                 </div>
                 <div className="col w-full lg:w-1/2 mt-2 lg:mt-0">
@@ -230,10 +249,29 @@ export default function Register() {
                     Confirm Password:
                   </label>
                   <input
-                    type="text"
-                    className="bg-transparent border rounded-full w-full h-8 shrink focus:outline-none focus:ring focus:border-blue-500 focus:border-0 mt-2 pb-1"
+                    type="password"
+                    className={`bg-transparent border rounded-full w-full h-8 shrink focus:outline-none focus:ring focus:border-blue-500 focus:border-0 mt-2 pb-1 text-white text-xl font-extralight pl-4 
+                    ${
+                      (console.log(errors.confirmpassword),
+                      errors.confirmpassword &&
+                        (errors.confirmpassword
+                          ? "ring ring-red-800 border-0 outline-none "
+                          : "ring ring-green-500 border-0 outline-none "))
+                    }}`}
+                    placeholder={`${
+                      errors.confirmpassword && errors.confirmpassword
+                        ? errors.confirmpassword.type === "required"
+                          ? "Required"
+                          : ""
+                        : ""
+                    }`}
                     name="confirmpassword"
-                    {...register("confirmpassword", { required: true })}
+                    {...register("confirmpassword", {
+                      required: true,
+                      validate: (value) =>
+                        value === password.current ||
+                        "The passwords do not match",
+                    })}
                   ></input>
                 </div>
               </div>
@@ -332,6 +370,7 @@ export default function Register() {
                   <button
                     type="submit"
                     className="bg-green-900 rounded-full mt-4 text-white font-extralight text-2xl py-2 px-5 pb-3"
+                    onClick={handleSubmit(handleSubmitData)}
                   >
                     Sign-Up
                   </button>
