@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useContext } from "react";
+import { UserContext } from "../App";
 
 function Login() {
+  const { LoggedIn, setLoggedIn } = useContext(UserContext);
   const asf = "white";
   return (
     <div className="flex justify-center items-center h-screen w-screen ">
@@ -64,13 +66,25 @@ function Login() {
                 </label>
               </div>
             </div>
-            <div className="flex justify-center">
+            <div className="flex flex-col justify-evenly">
               <button
-                type="submit"
-                className="bg-green-900 rounded-full mt-4 text-white font-extralight text-2xl py-2 px-5 pb-3"
+                type="button"
+                className="bg-green-900 rounded-full mt-4 w-full text-white font-extralight text-2xl py-1 px-5 pb-2"
+                // onClick={async () => {
+                //   const user  = await
+                // }}
               >
                 Log In
               </button>
+              <div className="text-white font-extralight text-2xl pl-2 pb-3 self-start">
+                <span className="pb-1 pr-4">Don't have an Account.</span>
+                <button
+                  type="button"
+                  className="bg-green-900 rounded-full mt-4 text-white font-extralight text-2xl py-1 px-5 pb-2"
+                >
+                  Sign Up
+                </button>
+              </div>
             </div>
           </form>
         </div>
