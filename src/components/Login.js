@@ -1,16 +1,68 @@
-import React, { useContext } from "react";
+import axios from "axios";
+import React, { useContext, useState } from "react";
 import { UserContext } from "../App";
 
 function Login() {
   const { LoggedIn, setLoggedIn } = useContext(UserContext);
+  const [User, setUser] = useState({
+    email: "",
+    password: "",
+    rememberMe: false,
+    admin: false,
+  });
+  const handleChange = (event) => {
+    setUser({
+      ...User,
+      [event.target.name]: event.target.value,
+    });
+    console.log(event.target.value);
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    console.log(User);
+    axios({
+      method: "post",
+      url: "http://localhost:3000/users/login",
+      data: {
+        User,
+      },
+    })
+      .then((res) => {
+        console.log("success");
+        const token = res.data.token;
+        localStorage.setItem("token", token);
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.log("Error");
+      });
+  };
+
+  const handleRememberMe = (event) => {
+    // console.log(event.target);
+    setUser((User) => ({
+      ...User,
+      rememberMe: !User.rememberMe,
+    }));
+  };
+
+  const handleAdmin = (event) => {
+    // console.log(event.target);
+    setUser((User) => ({
+      ...User,
+      admin: !User.admin,
+    }));
+  };
+
   const asf = "white";
   return (
-    <div className="flex justify-center items-center h-screen w-screen ">
+    <div className="flex justify-center items-start h-screen w-screen overflow-hidden">
       <div
-        className="flex flex-col flex-wrap justify-around
-       items-center rounded-3xl h-4/5 w-5/6 bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-30 border lg:flex-row "
+        className="flex flex-col flex-wrap justify-evenly mt-20
+       items-center rounded-3xl h-[78%] w-5/6 top-2 lg:h-5/6 lg:w-5/6 bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-30 border lg:flex-row overflow-hidden md:overflow-auto"
       >
-        <div className="shrink">
+        <div className="w-full h-1/4 lg:h-full lg:w-2/6 flex justify-center items-center">
           <svg
             width="120"
             height="150"
@@ -27,66 +79,67 @@ function Login() {
             />
           </svg>
         </div>
-        <div className="font-normal text-4xl flex flex-col overflow-hidden">
-          <form
-            method="post"
-            onSubmit={() => {
-              alert("login");
-            }}
-          >
-            <div className="flex flex-col items-center">
-              <label className="text-white font-extralight text-2xl pl-6 pb-2 self-start">
-                Email:
-              </label>
-              <input
-                type="text"
-                className="bg-transparent border border-white rounded-full w-11/12 h-8 shrink text-white text-xl font-extralight pl-4  focus:outline-none focus:ring focus:border-blue-500 focus:border-0  pb-1"
-              ></input>
-            </div>
-            <div className="flex flex-col items-center py-2">
-              <label className="text-white font-extralight text-2xl pl-6 pb-2 self-start">
-                Password:
-              </label>
-              <input
-                type="Password"
-                className="bg-transparent border border-white rounded-full w-11/12 h-8 shrink text-white text-xl font-extralight pl-4 focus:outline-none focus:ring focus:border-blue-500 focus:border-0 pb-1"
-              ></input>
-            </div>
-            <div className="flex justify-around gap-4">
-              <div>
-                <input type={"checkbox"}></input>
-                <label className="text-white font-extralight text-2xl pl-2 pb-3 self-start">
-                  Remember Me.
+        <div className="font-normal text-4xl flex flex-col items-center overflow-hidden w-full h-3/4 lg:justify-center lg:items-center lg:flex-row lg:w-3/6 lg:h-full ">
+          <div className="h-4/5 w-4/5 mt-4 flex flex-col justify-center">
+            <form>
+              <div className="flex flex-col items-center justify-center">
+                <label className="text-white font-extralight text-2xl pl-6 pb-2 self-start">
+                  Email:
                 </label>
+                <input
+                  type="text"
+                  className="bg-transparent border border-white rounded-full w-11/12 h-10 shrink text-white text-xl font-extralight pl-4  focus:outline-none focus:ring focus:border-blue-500 focus:border-0  pb-1 "
+                  name="email"
+                  onChange={handleChange}
+                  value={User.email}
+                ></input>
               </div>
-              <div>
-                <input type={"checkbox"}></input>
-                <label className="text-white font-extralight text-2xl pl-2 pb-3 self-start">
-                  Admin.
+              <div className="flex flex-col items-center py-2">
+                <label className="text-white font-extralight text-2xl pl-6 pb-2 self-start">
+                  Password:
                 </label>
+                <input
+                  type="Password"
+                  className="bg-transparent border border-white rounded-full w-11/12 h-10 shrink text-white text-xl font-extralight pl-4 focus:outline-none focus:ring focus:border-blue-500 focus:border-0 pb-1"
+                  name="password"
+                  onChange={handleChange}
+                  value={User.password}
+                ></input>
               </div>
-            </div>
-            <div className="flex flex-col justify-evenly">
-              <button
-                type="button"
-                className="bg-green-900 rounded-full mt-4 w-full text-white font-extralight text-2xl py-1 px-5 pb-2"
-                // onClick={async () => {
-                //   const user  = await
-                // }}
-              >
-                Log In
-              </button>
-              <div className="text-white font-extralight text-2xl pl-2 pb-3 self-start">
-                <span className="pb-1 pr-4">Don't have an Account.</span>
+              <div className="flex justify-around gap-4">
+                <div>
+                  <input type={"checkbox"} onClick={handleRememberMe}></input>
+                  <label className="text-white font-extralight text-2xl pl-2 pb-3 self-start">
+                    Remember Me.
+                  </label>
+                </div>
+                <div>
+                  <input type={"checkbox"} onClick={handleAdmin}></input>
+                  <label className="text-white font-extralight text-2xl pl-2 pb-3 self-start">
+                    Admin.
+                  </label>
+                </div>
+              </div>
+              <div className="flex flex-col items-center justify-evenly">
                 <button
                   type="button"
-                  className="bg-green-900 rounded-full mt-4 text-white font-extralight text-2xl py-1 px-5 pb-2"
+                  className="bg-green-900 rounded-full mt-4 w-11/12  text-white font-extralight text-2xl py-1 px-5 pb-2"
+                  onClick={handleSubmit}
                 >
-                  Sign Up
+                  Log In
                 </button>
+                <div className="text-white font-extralight text-2xl pl-2 pb-3 pt-4">
+                  <span className="pb-1 pr-4">Don't have an Account.</span>
+                  <button
+                    type="button"
+                    className="bg-green-900 rounded-full mt-4 text-white font-extralight text-2xl py-1 px-5 pb-2"
+                  >
+                    Sign Up
+                  </button>
+                </div>
               </div>
-            </div>
-          </form>
+            </form>
+          </div>
         </div>
       </div>
     </div>

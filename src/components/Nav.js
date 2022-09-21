@@ -12,28 +12,28 @@ export default function Nav(props) {
         <Link
           id="/"
           to="/"
-          className="bg-transparent p-3 border rounded-full flex text-lg text-white hover:text-black hover:bg-white duration-200 md:p-6 md:text-2xl"
+          className="bg-transparent p-4 border rounded-full flex text-2xl text-white hover:text-black hover:bg-white duration-200 md:p-6 md:text-2xl"
         >
           <HiHome className="" />
         </Link>
         <Link
           id="projects"
           to="/projects"
-          className="bg-transparent p-3 border rounded-full flex text-lg text-white hover:text-black hover:bg-white duration-200 md:p-6 md:text-2xl"
+          className="bg-transparent p-4 border rounded-full flex text-2xl text-white hover:text-black hover:bg-white duration-200 md:p-6 md:text-2xl"
         >
           <AiOutlineCode className="" />
         </Link>
         <Link
           id="friends"
           to="/friends"
-          className="bg-transparent p-3 border rounded-full flex text-lg text-white hover:text-black hover:bg-white duration-200 md:p-6 md:text-2xl"
+          className="bg-transparent p-4 border rounded-full flex text-2xl text-white hover:text-black hover:bg-white duration-200 md:p-6 md:text-2xl"
         >
           <FaUserFriends className="" />
         </Link>
         <Link
           id="profile"
           to="/profile"
-          className="bg-transparent p-3 border rounded-full flex text-lg text-white hover:text-black hover:bg-white duration-200 md:p-6 md:text-2xl"
+          className="bg-transparent p-4 border rounded-full flex text-2xl text-white hover:text-black hover:bg-white duration-200 md:p-6 md:text-2xl"
         >
           <HiUser className="" />
         </Link>

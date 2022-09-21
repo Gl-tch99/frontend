@@ -34,12 +34,13 @@ function App() {
       value={({ LoggedIn, setLoggedIn }, { User, setUser })}
       // user={{ User, setUser }}
     >
-      <div className="bg-[#001220] h-screen w-screen m-0 p-0 ">
+      <div className="bg-[#001220] h-screen w-screen m-0 p-0 overflow-hidden overflow-x-hidden">
         {/*//040404*/}
         <Svganimation />
         {/* <Wavesanimation /> */}
 
         {/* {LoggedIn && !LargeScreen ? <Nav /> : <Login />} */}
+        <Nav />
         <div className="container">
           <Routes>
             {/* <Route
