@@ -130,7 +130,7 @@ export default function Projectadd() {
   const handleSubmitData = (event) => {
     // alert(User);
     event.preventDefault();
-    // console.log(User);
+    console.log("submit");
     axios({
       method: "post",
       url: "http://localhost:3000/projects/submit",
@@ -152,6 +152,15 @@ export default function Projectadd() {
     setProject({
       ...Project,
       technologies: newtechnologies,
+    });
+  };
+  const removeteamuser = (user) => {
+    const newteamusers = Project.technologies.filter((ele, index) => {
+      return ele !== user;
+    });
+    setProject({
+      ...Project,
+      teamusers: newteamusers,
     });
   };
 
@@ -398,7 +407,7 @@ export default function Projectadd() {
                             className="flex-auto grow-0 text-white font-extralight text-2xl bg-clip-padding backdrop-filter backdrop-blur-md border rounded-full mt-3 pb-1 px-4 bg-transparent hover:bg-red-800 cursor-pointer"
                             key={index}
                             onClick={() => {
-                              removeSkill(tech);
+                              removeTechnology(tech);
                             }}
                             value={tech}
                           >
@@ -421,7 +430,7 @@ export default function Projectadd() {
                     name="experience"
                     value={UserInput}
                     onChange={(event) => {
-                      setExpInput(event.target.value);
+                      setUserInput(event.target.value);
                     }}
                     onKeyDown={handleteamuserChange}
                     placeholder="Ex: Abc-2-y or Abc-3-M"
@@ -435,14 +444,12 @@ export default function Projectadd() {
                           <div
                             className="flex justify-center items-center grow-0 text-white font-extralight text-2xl bg-clip-padding backdrop-filter backdrop-blur-md border rounded-full lg:mt-3 md:mt-1 pb-1 px-4 bg-transparent hover:bg-red-800 cursor-pointer"
                             key={index}
-                            onClick={() => removeSkill(Exp)}
+                            onClick={() => removeteamuser(user)}
                             value={user}
                           >
                             <div className="">
                               <IoMdRemoveCircleOutline className="hidden" />
-                              <span>
-                                {Exp.experience + " - " + Exp.duration}
-                              </span>
+                              <span>{user}</span>
                             </div>
                           </div>
                         );
@@ -457,24 +464,21 @@ export default function Projectadd() {
                     type="submit"
                     className="bg-green-900 rounded-full mt-4 text-white font-extralight text-2xl py-2 px-5 pb-3"
                     disabled={
-                      Errors.firstname ||
-                      Errors.lastname ||
-                      Errors.email ||
-                      Errors.mobile ||
-                      Errors.password ||
+                      Errors.name ||
+                      Errors.creatorid ||
+                      Errors.leaderid ||
                       Errors.description
                         ? true
-                        : Errors.firstnametouched ||
-                          Errors.lastnametouched ||
-                          Errors.emailtouched ||
-                          Errors.passwordtouched ||
-                          Errors.confirmpasswordtouched ||
-                          Errors.mobiletouched ||
+                        : Errors.nametouched ||
+                          Errors.creatoridtouched ||
+                          Errors.leaderidtouched ||
                           Errors.descriptiontouched
                         ? false
                         : true
                     }
-                    onClick={handleSubmitData}
+                    onClick={() => {
+                      handleSubmitData();
+                    }}
                   >
                     Sign-Up
                   </button>

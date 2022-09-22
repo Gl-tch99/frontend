@@ -1,5 +1,6 @@
 import React, { useContext, useEffect } from "react";
 import { useNavigate } from "react-router";
+import { Link } from "react-router-dom";
 import { UserContext } from "../App";
 
 export default function Home() {
@@ -39,7 +40,12 @@ export default function Home() {
             id="left-2"
             className="rounded-3xl w-full h-[38%] border overflow-scroll md:overflow-auto scrollbar-hide"
           >
-            Projects
+            <Link
+              to={"/addproj"}
+              className="bg-green-900 rounded-full  text-white font-extralight xs:py-2 sm:py-2 md:py-2 text-2xl lg:py-2 px-5 lg:pb-2"
+            >
+              Add Project
+            </Link>
           </div>
         </div>
         <div

@@ -77,7 +77,7 @@ function App() {
         <Svganimation />
         {/* {!LargeScreen ? <Nav /> : ""} */}
         <Nav />
-        <Projectadd />
+        {/* <Projectadd /> */}
         <div className="container">
           <Routes>
             <Route path="/" element={<Login />} />
@@ -89,6 +89,20 @@ function App() {
                     <Home />
                   ) : (
                     <MobileHome />
+                  )
+                ) : (
+                  <Navigate to="/" />
+                )
+              }
+            />
+            <Route
+              path="/addproj"
+              element={
+                LoggedIn ? (
+                  LargeScreen ? (
+                    <Projectadd />
+                  ) : (
+                    <Projectadd />
                   )
                 ) : (
                   <Navigate to="/" />
