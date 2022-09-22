@@ -1,57 +1,70 @@
 import axios from "axios";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router";
+import { Link } from "react-router-dom";
 import { UserContext } from "../App";
 
 function Login() {
-  const { LoggedIn, setLoggedIn } = useContext(UserContext);
-  const [User, setUser] = useState({
+  const navigate = useNavigate();
+  const { LoggedIn, setLoggedIn, User, setUser } = useContext(UserContext);
+
+  const [LoginUser, setLoginUser] = useState({
     email: "",
     password: "",
     rememberMe: false,
     admin: false,
   });
   const handleChange = (event) => {
-    setUser({
-      ...User,
+    setLoginUser({
+      ...LoginUser,
       [event.target.name]: event.target.value,
     });
     console.log(event.target.value);
   };
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
+  useEffect(() => {
     console.log(User);
-    axios({
+    console.log(LoggedIn);
+    if (LoggedIn) navigate("/home");
+  }, [LoggedIn, User]);
+
+  const handleSubmit = async (event) => {
+    console.log(LoginUser);
+    await axios({
       method: "post",
       url: "http://localhost:3000/users/login",
       data: {
-        User,
+        LoginUser,
       },
     })
       .then((res) => {
         console.log("success");
         const token = res.data.token;
         localStorage.setItem("token", token);
-        console.log(res.data);
+        console.log(res.data._doc);
+        setUser(res.data._doc);
+        setLoggedIn(true);
+        // setUser(res.data._doc);
+        console.log(LoggedIn);
       })
       .catch((err) => {
-        console.log("Error");
+        console.log(err);
       });
   };
 
   const handleRememberMe = (event) => {
     // console.log(event.target);
-    setUser((User) => ({
-      ...User,
-      rememberMe: !User.rememberMe,
+    setLoginUser((LoginUser) => ({
+      ...LoginUser,
+      rememberMe: !LoginUser.rememberMe,
     }));
   };
 
   const handleAdmin = (event) => {
     // console.log(event.target);
-    setUser((User) => ({
-      ...User,
-      admin: !User.admin,
+    setLoginUser((LoginUser) => ({
+      ...LoginUser,
+      admin: !LoginUser.admin,
     }));
   };
 
@@ -91,7 +104,7 @@ function Login() {
                   className="bg-transparent border border-white rounded-full w-11/12 h-10 shrink text-white text-xl font-extralight pl-4  focus:outline-none focus:ring focus:border-blue-500 focus:border-0  pb-1 "
                   name="email"
                   onChange={handleChange}
-                  value={User.email}
+                  value={LoginUser.email}
                 ></input>
               </div>
               <div className="flex flex-col items-center py-2">
@@ -103,10 +116,10 @@ function Login() {
                   className="bg-transparent border border-white rounded-full w-11/12 h-10 shrink text-white text-xl font-extralight pl-4 focus:outline-none focus:ring focus:border-blue-500 focus:border-0 pb-1"
                   name="password"
                   onChange={handleChange}
-                  value={User.password}
+                  value={LoginUser.password}
                 ></input>
               </div>
-              <div className="flex justify-around gap-4">
+              <div className="flex justify-evenly gap-2">
                 <div>
                   <input type={"checkbox"} onClick={handleRememberMe}></input>
                   <label className="text-white font-extralight text-2xl pl-2 pb-3 self-start">
@@ -124,18 +137,20 @@ function Login() {
                 <button
                   type="button"
                   className="bg-green-900 rounded-full mt-4 w-11/12  text-white font-extralight text-2xl py-1 px-5 pb-2"
-                  onClick={handleSubmit}
+                  onClick={() => {
+                    handleSubmit();
+                  }}
                 >
                   Log In
                 </button>
-                <div className="text-white font-extralight text-2xl pl-2 pb-3 pt-4">
-                  <span className="pb-1 pr-4">Don't have an Account.</span>
-                  <button
-                    type="button"
-                    className="bg-green-900 rounded-full mt-4 text-white font-extralight text-2xl py-1 px-5 pb-2"
+                <div className="flex justify-evenly flex-wrap text-white font-extralight text-2xl pl-2 pb-3 pt-4">
+                  <div className="pb-1 pr-4 mt-2">Don't have an Account.</div>
+                  <Link
+                    to={"/register"}
+                    className="bg-green-900 rounded-full  text-white font-extralight xs:py-2 sm:py-2 md:py-2 text-2xl lg:py-2 px-5 lg:pb-2"
                   >
-                    Sign Up
-                  </button>
+                    SignUp
+                  </Link>
                 </div>
               </div>
             </form>

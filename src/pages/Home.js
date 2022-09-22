@@ -1,6 +1,21 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
+import { useNavigate } from "react-router";
+import { UserContext } from "../App";
 
 export default function Home() {
+  const navigate = useNavigate();
+  const { LoggedIn, setLoggedIn, User, setUser } = useContext(UserContext);
+  useEffect(() => {
+    console.log(User);
+  }, [User, LoggedIn]);
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    setLoggedIn(false);
+    setUser({});
+    navigate("/");
+  };
+
   return (
     <div className="flex justify-center items-center h-screen w-screen ">
       <div
@@ -35,9 +50,18 @@ export default function Home() {
         </div>
         <div
           id="right"
-          className="rounded-3xl w-[25%] h-[93%] border overflow-scroll md:overflow-auto scrollbar-hide"
+          className=" flex flex-col justify-start items-center rounded-3xl w-[25%] h-[93%] border overflow-scroll md:overflow-auto scrollbar-hide"
         >
-          Profile
+          <div>
+            <button
+              className="bg-green-900 rounded-full mt-4 text-white font-extralight text-2xl py-2 px-5 pb-3 self-end"
+              onClick={() => {
+                handleLogout();
+              }}
+            >
+              Logout
+            </button>
+          </div>
         </div>
       </div>
     </div>

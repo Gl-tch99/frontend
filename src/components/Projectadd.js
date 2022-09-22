@@ -1,48 +1,44 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Navigate, useNavigate } from "react-router";
 import axios from "axios";
 import { IoMdRemoveCircleOutline } from "react-icons/io";
+import { UserContext } from "../App";
 
-export default function Register() {
-  const [SkillInput, setSkillInput] = useState("");
-  const [ExpInput, setExpInput] = useState("");
-  const [Cpass, setCpass] = useState("");
+export default function Projectadd() {
+  const { LoggedIn, setLoggedIn, User, setUser } = useContext(UserContext);
+  const [TechInput, setTechInput] = useState("");
+  const [UserInput, setUserInput] = useState("");
   const navigate = useNavigate();
-  const [User, setUser] = useState({
-    firstname: "",
-    lastname: "",
-    email: "",
-    password: "",
-    mobile: "",
-    skillsets: [],
-    experience: [],
+  const [Project, setProject] = useState({
+    name: "",
+    creatorid: User.userid,
+    leaderid: "",
+    technologies: [],
+    teamusers: [],
     description: "",
+    status: "",
   });
 
   const [Errors, setErrors] = useState({
-    firstname: false,
-    lastname: false,
-    email: false,
-    password: false,
-    confirmpassword: false,
-    mobile: false,
+    name: false,
+    creatorid: false,
+    leaderid: false,
     description: false,
-    firstnametouched: false,
-    lastnametouched: false,
-    emailtouched: false,
-    passwordtouched: false,
-    confirmpasswordtouched: false,
-    mobiletouched: false,
+    status: false,
+    nametouched: false,
+    creatoridtouched: false,
+    leaderidtouched: false,
     descriptiontouched: false,
+    statustouched: false,
   });
 
-  // useEffect(() => {
-  //   console.log(User);
-  // }, [User]);
+  useEffect(() => {
+    console.log(Project);
+  }, [Project]);
 
   const handleChange = (event) => {
-    setUser((User) => ({
-      ...User,
+    setUser((Project) => ({
+      ...Project,
       [event.target.name]: event.target.value,
     }));
   };
@@ -51,98 +47,53 @@ export default function Register() {
     const field = event.target.name;
     const value = event.target.value;
     switch (field) {
-      case "firstname": {
+      case "name": {
         if (value === "")
           setErrors({
             ...Errors,
             [field]: true,
-            firstnametouched: true,
+            nametouched: true,
           });
         else
           setErrors({
             ...Errors,
             [field]: false,
-            firstnametouched: true,
+            nametouched: true,
           });
         break;
       }
-      case "lastname": {
+      case "creatorid": {
         if (value === "")
           setErrors({
             ...Errors,
             [field]: true,
-            lastnametouched: true,
+            creatoridtouched: true,
           });
         else
           setErrors({
             ...Errors,
             [field]: false,
-            lastnametouched: true,
+            creatoridtouched: true,
           });
         break;
       }
-      case "email": {
-        if (value === "" || !value.match(/^([A-z]+)*(@\w+)*([.com, .org])+$/))
+      case "leaderid": {
+        if (value === "")
           setErrors({
             ...Errors,
             [field]: true,
-            emailtouched: true,
+            leaderidtouched: true,
           });
         else
           setErrors({
             ...Errors,
             [field]: false,
-            emailtouched: true,
-          });
-        break;
-      }
-      case "password": {
-        if (value === "" || value.length < 8 || value.length > 36)
-          setErrors({
-            ...Errors,
-            [field]: true,
-            passwordtouched: true,
-          });
-        else
-          setErrors({
-            ...Errors,
-            [field]: false,
-            passwordtouched: true,
-          });
-        break;
-      }
-      case "confirmpassword": {
-        if (value !== User.password)
-          setErrors({
-            ...Errors,
-            [field]: true,
-            confirmpasswordtouched: true,
-          });
-        else
-          setErrors({
-            ...Errors,
-            [field]: false,
-            confirmpasswordtouched: true,
-          });
-        break;
-      }
-      case "mobile": {
-        if (value === "" || !value.match(/^([987])(\d{9})$/))
-          setErrors({
-            ...Errors,
-            [field]: true,
-            mobiletouched: true,
-          });
-        else
-          setErrors({
-            ...Errors,
-            [field]: false,
-            mobiletouched: true,
+            leaderidtouched: true,
           });
         break;
       }
       case "description": {
-        if (value === "" || value < 5)
+        if (value === "" || value.length < 8 || value.length > 36)
           setErrors({
             ...Errors,
             [field]: true,
@@ -153,6 +104,21 @@ export default function Register() {
             ...Errors,
             [field]: false,
             descriptiontouched: true,
+          });
+        break;
+      }
+      case "status": {
+        if (value === "")
+          setErrors({
+            ...Errors,
+            [field]: true,
+            statustouched: true,
+          });
+        else
+          setErrors({
+            ...Errors,
+            [field]: false,
+            statustouched: true,
           });
         break;
       }
@@ -167,73 +133,58 @@ export default function Register() {
     // console.log(User);
     axios({
       method: "post",
-      url: "http://localhost:3000/users/submit",
+      url: "http://localhost:3000/projects/submit",
       data: {
-        User,
+        Project,
+      },
+      headers: {
+        authorization: " Bearer " + localStorage.token,
       },
     }).then((response) => {
-      const token = response.data.token;
-      localStorage.setItem("token", token);
-      console.log(response.data.token);
-      navigate("/login");
+      navigate("/home");
     });
   };
 
-  const removeSkill = (skill) => {
-    const newskills = User.skillsets.filter((ele, index) => {
-      return ele !== skill;
+  const removeTechnology = (tech) => {
+    const newtechnologies = Project.technologies.filter((ele, index) => {
+      return ele !== tech;
     });
-    setUser({
-      ...User,
-      skillsets: newskills,
+    setProject({
+      ...Project,
+      technologies: newtechnologies,
     });
   };
 
-  const handleExpChange = (event) => {
-    if (event.nativeEvent.key === "Enter" && ExpInput !== "") {
+  const handleTechChange = (event) => {
+    if (event.nativeEvent.key === "Enter" && TechInput !== "") {
       event.preventDefault();
-      const data = event.target.value.toString().split("-");
-      if (data.length === 3) {
-        setUser({
-          ...User,
-          experience: [
-            ...User.experience,
-            {
-              experience: data[0],
-              duration:
-                data[2] === "y" || data[2] === "Y"
-                  ? data[1] + " Years"
-                  : data[2] === "m" || data[2] === "M"
-                  ? data[1] + " Months"
-                  : "Invalid Duration.",
-            },
-          ],
-        });
-      } else {
-        event.preventDefault();
-        setExpInput("");
-      }
-      setExpInput("");
-    }
-  };
-
-  const handleSkillsChange = (event) => {
-    if (event.nativeEvent.key === "Enter" && SkillInput !== "") {
-      event.preventDefault();
-      setUser({
-        ...User,
-        skillsets: [...User.skillsets, SkillInput],
+      setProject({
+        ...Project,
+        technologies: [...Project.technologies, TechInput],
       });
-      setSkillInput("");
+      setTechInput("");
       // console.log(User);
-    } else if (event.nativeEvent.key === "Enter" && SkillInput === "")
+    } else if (event.nativeEvent.key === "Enter" && TechInput === "")
+      event.preventDefault();
+  };
+
+  const handleteamuserChange = (event) => {
+    if (event.nativeEvent.key === "Enter" && TechInput !== "") {
+      event.preventDefault();
+      setProject({
+        ...Project,
+        teamusers: [...Project.teamusers, UserInput],
+      });
+      setUserInput("");
+      // console.log(User);
+    } else if (event.nativeEvent.key === "Enter" && UserInput === "")
       event.preventDefault();
   };
 
   return (
     <div className="flex justify-center items-start h-screen w-screen lg:items-center">
       <div
-        className="flex flex-col flex-wrap 
+        className="flex flex-col flex-wrap
        items-center rounded-3xl h-5/6 w-5/6 bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-30 border lg:flex overflow-x-hidden md:overflow-x-hidden scrollbar-hide bg-black  md:h-4/5 sm:mt-10 md:mt-10 mt-10"
       >
         <div className="h-3/4 w-3/4 mt-2 items-center ">
@@ -242,45 +193,45 @@ export default function Register() {
               <div className="row flex flex-col lg:flex-row items-center justify-around lg:gap-4 lg:w-full w-3/4">
                 <div className="col w-full lg:w-1/2 mt-2 lg:mt-0">
                   <label className="text-white font-extralight text-2xl pl-4 py-4 self-start">
-                    First Name:
+                    Project Name:
                   </label>
                   <input
                     type="text"
-                    className={`bg-transparent border rounded-full w-full h-8 shrink focus:outline-none focus:ring focus:border-blue-500 focus:border-0 mt-2 pb-1 text-white text-xl font-extralight pl-4 
+                    className={`bg-transparent border rounded-full w-full h-8 shrink focus:outline-none focus:ring focus:border-blue-500 focus:border-0 mt-2 pb-1 text-white text-xl font-extralight pl-4
                     ${
-                      Errors.firstname &&
-                      (Errors.firstname
+                      Errors.name &&
+                      (Errors.name
                         ? "ring ring-red-800 border-0 outline-none border-red-800"
                         : "ring ring-green-500 border-0 outline-none border-red-800")
                     }}`}
                     placeholder={`${
-                      Errors.firstname && Errors.firstname ? "Required" : ""
+                      Errors.name && Errors.name ? "Required" : ""
                     }`}
-                    name="firstname"
+                    name="name"
                     onChange={handleChange}
-                    value={User.firstname}
+                    value={Project.name}
                     onBlur={validate}
                   ></input>
                 </div>
                 <div className="col w-full lg:w-1/2 mt-2 lg:mt-0">
                   <label className="text-white font-extralight text-2xl pl-4 py-4 self-start">
-                    Last Name:
+                    Creator Id:
                   </label>
                   <input
                     type="text"
-                    className={`bg-transparent border rounded-full w-full h-8 shrink focus:outline-none focus:ring focus:border-blue-500 focus:border-0 mt-2 pb-1 text-white text-xl font-extralight pl-4 
+                    className={`bg-transparent border rounded-full w-full h-8 shrink focus:outline-none focus:ring focus:border-blue-500 focus:border-0 mt-2 pb-1 text-white text-xl font-extralight pl-4
                     ${
-                      Errors.lastname &&
-                      (Errors.lastname
+                      Errors.creatorid &&
+                      (Errors.creatorid
                         ? "ring ring-red-800 border-0 outline-none "
                         : "ring ring-green-500 border-0 outline-none ")
                     }}`}
                     placeholder={`${
-                      Errors.lastname && Errors.lastname ? "Required" : ""
+                      Errors.creatorid && Errors.creatorid ? "Required" : ""
                     }`}
-                    name="lastname"
+                    name="creatorid"
                     onChange={handleChange}
-                    value={User.lastname}
+                    value={Project.creatorid}
                     onBlur={validate}
                   ></input>
                 </div>
@@ -289,23 +240,25 @@ export default function Register() {
               <div className="row flex flex-col lg:flex-row items-center justify-around lg:gap-4 lg:w-full lg:mt-4 w-3/4">
                 <div className="col w-full lg:w-3/5 mt-2 lg:mt-0">
                   <label className="text-white font-extralight text-2xl pl-4 py-4 self-start ">
-                    Email Id:
+                    Leader Id:
                   </label>
                   <input
                     type="text"
-                    className={`bg-transparent border rounded-full w-full h-8 shrink focus:outline-none focus:ring focus:border-blue-500 focus:border-0 mt-2 pb-1 text-white text-xl font-extralight pl-4 
+                    className={`bg-transparent border rounded-full w-full h-8 shrink focus:outline-none focus:ring focus:border-blue-500 focus:border-0 mt-2 pb-1 text-white text-xl font-extralight pl-4
                     ${
-                      Errors.email &&
-                      (Errors.email
+                      Errors.leaderid &&
+                      (Errors.leaderid
                         ? "ring ring-red-800 border-0 outline-none "
                         : "ring ring-green-500 border-0 outline-none ")
                     }}`}
                     placeholder={`${
-                      Errors.email && Errors.email === "" ? "Required" : ""
+                      Errors.leaderid && Errors.leaderid === ""
+                        ? "Required"
+                        : ""
                     }`}
                     name="email"
                     onChange={handleChange}
-                    value={User.email}
+                    value={Project.leaderid}
                     onBlur={validate}
                   ></input>
                 </div>
@@ -315,7 +268,7 @@ export default function Register() {
                   </label>
                   <input
                     type="text"
-                    className={`bg-transparent border rounded-full w-full h-8 shrink focus:outline-none focus:ring focus:border-blue-500 focus:border-0 mt-2 pb-1 text-white text-xl font-extralight pl-4 
+                    className={`bg-transparent border rounded-full w-full h-8 shrink focus:outline-none focus:ring focus:border-blue-500 focus:border-0 mt-2 pb-1 text-white text-xl font-extralight pl-4
                     ${
                       Errors.mobile &&
                       (Errors.mobile
@@ -333,7 +286,7 @@ export default function Register() {
                 </div>
               </div>
               {/*------------------------------------------------------------------------------------------------------------*/}
-              <div className="row flex flex-col lg:flex-row items-center justify-around lg:gap-4 lg:w-full lg:mt-4 w-3/4">
+              {/* <div className="row flex flex-col lg:flex-row items-center justify-around lg:gap-4 lg:w-full lg:mt-4 w-3/4">
                 <div className="col w-full lg:w-1/2 mt-2 lg:mt-0">
                   <label className="text-white font-extralight text-2xl pl-4 py-4 self-start ">
                     Password:
@@ -347,7 +300,7 @@ export default function Register() {
                   </label>
                   <input
                     type="password"
-                    className={`bg-transparent border rounded-full w-full h-8 shrink focus:outline-none focus:ring focus:border-blue-500 focus:border-0 mt-2 pb-1 text-white text-xl font-extralight pl-4 
+                    className={`bg-transparent border rounded-full w-full h-8 shrink focus:outline-none focus:ring focus:border-blue-500 focus:border-0 mt-2 pb-1 text-white text-xl font-extralight pl-4
                     ${
                       Errors.password &&
                       (Errors.password
@@ -369,7 +322,7 @@ export default function Register() {
                   </label>
                   <input
                     type="password"
-                    className={`bg-transparent border rounded-full w-full h-8 shrink focus:outline-none focus:ring focus:border-blue-500 focus:border-0 mt-2 pb-1 text-white text-xl font-extralight pl-4 
+                    className={`bg-transparent border rounded-full w-full h-8 shrink focus:outline-none focus:ring focus:border-blue-500 focus:border-0 mt-2 pb-1 text-white text-xl font-extralight pl-4
                     ${
                       Errors.confirmpassword &&
                       (Errors.confirmpassword
@@ -389,12 +342,12 @@ export default function Register() {
                     onBlur={validate}
                   ></input>
                 </div>
-              </div>
+              </div> */}
               {/*------------------------------------------------------------------------------------------------------------*/}
               <div className="row flex flex-col lg:flex-row items-center justify-around lg:gap-4 lg:w-full lg:mt-4 w-3/4">
                 <div className="col w-full lg:w-full mt-2 lg:mt-0">
                   <label className="text-white font-extralight text-2xl pl-4 py-4 self-start ">
-                    About Me:
+                    Project Description:
                   </label>
                   <textarea
                     id="message"
@@ -413,7 +366,7 @@ export default function Register() {
                     }`}
                     name="description"
                     onChange={handleChange}
-                    value={User.description}
+                    value={Project.description}
                     onBlur={validate}
                   ></textarea>
                 </div>
@@ -422,34 +375,34 @@ export default function Register() {
               <div className="row flex flex-col lg:flex-row items-center justify-start lg:gap-4 lg:w-full lg:mt-4 w-3/4 ">
                 <div className="col w-full md:w-full lg:w-1/3 self-start mt-2 lg:mt-0 ">
                   <label className="text-white font-extralight text-2xl pl-4 py-4 self-start">
-                    Skills:
+                    Technologies:
                   </label>
 
                   <input
                     type="text"
                     className="bg-transparent border border-white rounded-full w-full h-8 shrink text-white text-xl font-extralight pl-4  focus:outline-none focus:ring focus:border-blue-500 focus:border-0 mt-2 pb-1"
                     name="skill"
-                    value={SkillInput}
+                    value={TechInput}
                     onChange={(event) => {
-                      setSkillInput(event.target.value);
+                      setTechInput(event.target.value);
                     }}
-                    onKeyDown={handleSkillsChange}
+                    onKeyDown={handleTechChange}
                   ></input>
                 </div>
                 <div className="col flex w-full md:w-full lg:w-2/3 mt-2 lg:mt-0 self-start grow-0 max-w-full md:mb-2">
                   <div className="flex flex-wrap  lg:pt-6 pl-4 gap-2 w-full grow-0 flex-auto md:self-start">
-                    {User.skillsets &&
-                      User.skillsets.map((skill, index) => {
+                    {Project.technologies &&
+                      Project.technologies.map((tech, index) => {
                         return (
                           <div
                             className="flex-auto grow-0 text-white font-extralight text-2xl bg-clip-padding backdrop-filter backdrop-blur-md border rounded-full mt-3 pb-1 px-4 bg-transparent hover:bg-red-800 cursor-pointer"
                             key={index}
                             onClick={() => {
-                              removeSkill(skill);
+                              removeSkill(tech);
                             }}
-                            value={skill}
+                            value={tech}
                           >
-                            {skill}
+                            {tech}
                           </div>
                         );
                       })}
@@ -460,30 +413,30 @@ export default function Register() {
               <div className="row flex flex-col lg:flex-row items-center justify-start lg:gap-4 lg:w-full lg:mt-4 w-3/4 ">
                 <div className="col w-full md:w-full lg:w-1/3 self-start mt-2 lg:mt-0 ">
                   <label className="text-white font-extralight text-2xl pl-4 py-4 self-start">
-                    Experience:
+                    Team Users:
                   </label>
                   <input
                     type="text"
                     className="bg-transparent border border-white rounded-full w-full h-8 shrink text-white text-xl font-extralight pl-4  focus:outline-none focus:ring focus:border-blue-500 focus:border-0 mt-2 pb-1"
                     name="experience"
-                    value={ExpInput}
+                    value={UserInput}
                     onChange={(event) => {
                       setExpInput(event.target.value);
                     }}
-                    onKeyDown={handleExpChange}
+                    onKeyDown={handleteamuserChange}
                     placeholder="Ex: Abc-2-y or Abc-3-M"
                   ></input>
                 </div>
                 <div className="col flex w-full md:w-2/3 lg:w-2/3 mt-2 lg:mt-0 self-start grow-0 max-w-full">
                   <div className="flex flex-wrap py-6 pl-4 gap-2 w-full grow-0 flex-auto">
-                    {User.experience &&
-                      User.experience.map((Exp, index) => {
+                    {Project.teamusers &&
+                      Project.teamusers.map((user, index) => {
                         return (
                           <div
-                            className="flex justify-center items-center grow-0 text-white font-extralight text-2xl bg-clip-padding backdrop-filter backdrop-blur-md border rounded-full  lg:mt-3 md:mt-1 pb-1 px-4 py-1 bg-transparent hover:bg-red-800 cursor-pointer relative"
+                            className="flex justify-center items-center grow-0 text-white font-extralight text-2xl bg-clip-padding backdrop-filter backdrop-blur-md border rounded-full lg:mt-3 md:mt-1 pb-1 px-4 bg-transparent hover:bg-red-800 cursor-pointer"
                             key={index}
                             onClick={() => removeSkill(Exp)}
-                            value={Exp}
+                            value={user}
                           >
                             <div className="">
                               <IoMdRemoveCircleOutline className="hidden" />
