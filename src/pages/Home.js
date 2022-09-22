@@ -2,6 +2,11 @@ import React, { useContext, useEffect } from "react";
 import { useNavigate } from "react-router";
 import { Link } from "react-router-dom";
 import { UserContext } from "../App";
+import Friends from "./Friends";
+import {
+  IoIosCheckmarkCircleOutline,
+  IoIosCloseCircleOutline,
+} from "react-icons/io";
 
 export default function Home() {
   const navigate = useNavigate();
@@ -25,15 +30,44 @@ export default function Home() {
       >
         <div
           id="left"
-          className="flex flex-col justify-between items-center rounded-3xl w-[25%] h-[93%] overflow-scroll md:overflow-auto scrollbar-hide shadow-custom1 shadow-custom2 shadow-custom3 shadow-custom4"
+          className="flex flex-col justify-between items-center rounded-3xl w-[25%] h-[93%] overflow-scroll md:overflow-auto scrollbar-hide shadow-custom1 shadow-custom2 shadow-custom3 shadow-custom4 "
         >
           <div
             id="left-1"
-            className="flex flex-col justify-evenly items-center rounded-3xl w-full h-[60%] border overflow-scroll md:overflow-auto scrollbar-hide"
+            className="flex flex-col justify-evenly items-center rounded-3xl w-full h-[60%] border overflow-scroll md:overflow-auto scrollbar-hide "
           >
-            <div className="h-[10%] w-[98%] border rounded-3xl"></div>
+            <div className="h-[10%] w-[93%] border rounded-3xl mt-2"></div>
             <div className="h-[85%] w-[98%] rounded-3xl overflow-scroll scrollbar-hide">
-              <div></div>
+              <div className="flex flex-col items-center h-full mt-4">
+                {/* ------------------------------------------------------------------------ */}
+                {
+                  <div className="card w-[93%] bg-transparent border text-neutral-content h-[20%] felx justify-center items-center">
+                    <div className="card-body flex flex-row w-full h-full">
+                      <div className="w-3/5 h-full flex flex-col justify-center">
+                        <div>
+                          <h2 className="card-title text-white font-extralight ">
+                            Asdfsa asdfsad
+                          </h2>
+                        </div>
+                        <div>
+                          <p className="text-white font-extralight ">
+                            Accept / Deny?
+                          </p>
+                        </div>
+                      </div>
+                      <div className="flex-row flex justify-end items-center gap-2 w-2/5 h-full">
+                        <button className="btn btn-primary ">
+                          <IoIosCheckmarkCircleOutline size="30" />
+                        </button>
+                        <button className="btn btn-ghost">
+                          <IoIosCloseCircleOutline size="30" />
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                }
+                {/* ------------------------------------------------------------------------ */}
+              </div>
             </div>
           </div>
           <div

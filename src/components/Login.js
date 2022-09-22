@@ -121,14 +121,24 @@ function Login() {
               </div>
               <div className="flex justify-evenly gap-2">
                 <div>
-                  <input type={"checkbox"} onClick={handleRememberMe}></input>
-                  <label className="text-white font-extralight text-2xl pl-2 pb-3 self-start">
+                  <input
+                    type="checkbox"
+                    onClick={handleRememberMe}
+                    checked={LoginUser.rememberMe ? "checked" : ""}
+                    className="checkbox checkbox-primary"
+                  ></input>
+                  <label className="text-white font-extralight text-2xl pl-2 pb-4 self-start">
                     Remember Me.
                   </label>
                 </div>
                 <div>
-                  <input type={"checkbox"} onClick={handleAdmin}></input>
-                  <label className="text-white font-extralight text-2xl pl-2 pb-3 self-start">
+                  <input
+                    type={"checkbox"}
+                    onClick={handleAdmin}
+                    checked={LoginUser.admin ? "checked" : ""}
+                    className="checkbox checkbox-primary"
+                  ></input>
+                  <label className="text-white font-extralight text-2xl pl-2 pb-4 self-start">
                     Admin.
                   </label>
                 </div>

@@ -122,6 +122,21 @@ export default function Projectadd() {
           });
         break;
       }
+      case "payment": {
+        if (value === "")
+          setErrors({
+            ...Errors,
+            [field]: true,
+            paymenttouched: true,
+          });
+        else
+          setErrors({
+            ...Errors,
+            [field]: false,
+            paymenttouched: true,
+          });
+        break;
+      }
       default:
         break;
     }
@@ -214,7 +229,7 @@ export default function Projectadd() {
                         : "ring ring-green-500 border-0 outline-none border-red-800")
                     }}`}
                     placeholder={`${
-                      Errors.name && Errors.name ? "Required" : ""
+                      Errors.name && Project.name ? "Required" : ""
                     }`}
                     name="name"
                     onChange={handleChange}
@@ -236,7 +251,7 @@ export default function Projectadd() {
                         : "ring ring-green-500 border-0 outline-none ")
                     }}`}
                     placeholder={`${
-                      Errors.creatorid && Errors.creatorid ? "Required" : ""
+                      Errors.creatorid && Project.creatorid ? "Required" : ""
                     }`}
                     name="creatorid"
                     onChange={handleChange}
@@ -261,11 +276,11 @@ export default function Projectadd() {
                         : "ring ring-green-500 border-0 outline-none ")
                     }}`}
                     placeholder={`${
-                      Errors.leaderid && Errors.leaderid === ""
+                      Errors.leaderid && Project.leaderid === ""
                         ? "Required"
                         : ""
                     }`}
-                    name="email"
+                    name="leaderid"
                     onChange={handleChange}
                     value={Project.leaderid}
                     onBlur={validate}
@@ -273,21 +288,21 @@ export default function Projectadd() {
                 </div>
                 <div className="col w-full lg:w-2/5 mt-2 lg:mt-0">
                   <label className="text-white font-extralight text-2xl pl-4 py-4 self-start ">
-                    Mobile:
+                    Payment:
                   </label>
                   <input
                     type="text"
                     className={`bg-transparent border rounded-full w-full h-8 shrink focus:outline-none focus:ring focus:border-blue-500 focus:border-0 mt-2 pb-1 text-white text-xl font-extralight pl-4
                     ${
-                      Errors.mobile &&
-                      (Errors.mobile
+                      Errors.payment &&
+                      (Errors.payment
                         ? "ring ring-red-800 border-0 outline-none "
                         : "ring ring-green-500 border-0 outline-none ")
                     }}`}
                     placeholder={`${
-                      Errors.mobile && User.mobile === "" ? "Required" : ""
+                      Errors.payment && Project.payment === "" ? "Required" : ""
                     }`}
-                    name="mobile"
+                    name="payment"
                     onChange={handleChange}
                     value={User.mobile}
                     onBlur={validate}
@@ -369,7 +384,7 @@ export default function Projectadd() {
                         : "ring ring-green-500 border-0 outline-none ")
                     }}`}
                     placeholder={`${
-                      Errors.description && Errors.description === ""
+                      Errors.description && Project.description === ""
                         ? "Required"
                         : ""
                     }`}
@@ -390,7 +405,7 @@ export default function Projectadd() {
                   <input
                     type="text"
                     className="bg-transparent border border-white rounded-full w-full h-8 shrink text-white text-xl font-extralight pl-4  focus:outline-none focus:ring focus:border-blue-500 focus:border-0 mt-2 pb-1"
-                    name="skill"
+                    name="technologies"
                     value={TechInput}
                     onChange={(event) => {
                       setTechInput(event.target.value);
@@ -427,7 +442,7 @@ export default function Projectadd() {
                   <input
                     type="text"
                     className="bg-transparent border border-white rounded-full w-full h-8 shrink text-white text-xl font-extralight pl-4  focus:outline-none focus:ring focus:border-blue-500 focus:border-0 mt-2 pb-1"
-                    name="experience"
+                    name="teamusers"
                     value={UserInput}
                     onChange={(event) => {
                       setUserInput(event.target.value);
@@ -467,12 +482,14 @@ export default function Projectadd() {
                       Errors.name ||
                       Errors.creatorid ||
                       Errors.leaderid ||
-                      Errors.description
+                      Errors.description ||
+                      Errors.payment
                         ? true
                         : Errors.nametouched ||
                           Errors.creatoridtouched ||
                           Errors.leaderidtouched ||
-                          Errors.descriptiontouched
+                          Errors.descriptiontouched ||
+                          Errors.paymenttouched
                         ? false
                         : true
                     }
