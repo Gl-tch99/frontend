@@ -70,10 +70,10 @@ function Login() {
 
   const asf = "white";
   return (
-    <div className="flex justify-center items-start h-screen w-screen overflow-hidden">
+    <div className="flex justify-center items-start h-screen w-screen overflow-hidden lg:items-center">
       <div
         className="flex flex-col flex-wrap justify-evenly mt-20
-       items-center rounded-3xl h-[78%] w-5/6 top-2 lg:h-5/6 lg:w-5/6 bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-30 border lg:flex-row overflow-hidden md:overflow-auto"
+         items-center rounded-3xl h-[78%] w-5/6 top-2 lg:h-5/6 lg:w-5/6 bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-30 border lg:flex-row overflow-hidden md:overflow-auto"
       >
         <div className="w-full h-1/4 lg:h-full lg:w-2/6 flex justify-center items-center">
           <svg
@@ -126,6 +126,9 @@ function Login() {
                     onClick={handleRememberMe}
                     checked={LoginUser.rememberMe ? "checked" : ""}
                     className="checkbox checkbox-primary"
+                    onChange={() => {
+                      console.log(LoginUser.admin);
+                    }}
                   ></input>
                   <label className="text-white font-extralight text-2xl pl-2 pb-4 self-start">
                     Remember Me.
@@ -137,6 +140,9 @@ function Login() {
                     onClick={handleAdmin}
                     checked={LoginUser.admin ? "checked" : ""}
                     className="checkbox checkbox-primary"
+                    onChange={() => {
+                      console.log(LoginUser.admin);
+                    }}
                   ></input>
                   <label className="text-white font-extralight text-2xl pl-2 pb-4 self-start">
                     Admin.
@@ -146,7 +152,8 @@ function Login() {
               <div className="flex flex-col items-center justify-evenly">
                 <button
                   type="button"
-                  className="bg-green-900 rounded-full mt-4 w-11/12  text-white font-extralight text-2xl py-1 px-5 pb-2"
+                  className="btn btn-outline btn-success rounded-full mt-4 w-11/12  text-white font-extralight text-2xl py-1 px-5 pb-2"
+                  // className="btn btn-outline btn-success rounded-full w-36 mt-4"
                   onClick={() => {
                     handleSubmit();
                   }}
@@ -157,7 +164,7 @@ function Login() {
                   <div className="pb-1 pr-4 mt-2">Don't have an Account.</div>
                   <Link
                     to={"/register"}
-                    className="bg-green-900 rounded-full  text-white font-extralight xs:py-2 sm:py-2 md:py-2 text-2xl lg:py-2 px-5 lg:pb-2"
+                    className="btn btn-outline btn-success rounded-full  text-white font-extralight xs:py-2 sm:py-2 md:py-2 text-2xl lg:py-2 px-5 lg:pb-2"
                   >
                     SignUp
                   </Link>

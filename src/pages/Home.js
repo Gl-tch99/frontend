@@ -99,14 +99,40 @@ export default function Home() {
         </div>
         <div
           id="middle"
-          className="rounded-3xl w-[45%] h-[93%] border overflow-scroll md:overflow-auto scrollbar-hide"
+          className="rounded-3xl w-[45%] h-[93%]  justify-between items-center flex flex-col overflow-scroll md:overflow-auto scrollbar-hide"
         >
-          <Link
-            to={"/addproj"}
-            className="bg-green-900 rounded-full  text-white font-extralight xs:py-2 sm:py-2 md:py-2 text-2xl lg:py-2 px-5 lg:pb-2"
-          >
-            Add Project
-          </Link>
+          {/* --------------------------------------------------------------------------------------------------------------- */}
+          <div className="flex h-[20%] w-[100%] flex-row mt-1 ">
+            <div className="h-full w-[47%] flex justify-center border rounded-box items-center bg-transparent">
+              <div className="text-white text-2xl  font-extralight flex flex-col ">
+                <div className="text-center">Add Project.</div>
+                <div className="text-white text-xl font-extralight">
+                  Create or Join a Project.
+                </div>
+                <button
+                  className="btn btn-outline btn-success rounded-full w-30 mt-4"
+                  onClick={() => {
+                    navigate("/addproj");
+                  }}
+                >
+                  Add Project
+                </button>
+              </div>
+              <div></div>
+            </div>
+            <div className="divider divider-horizontal">OR</div>
+            <div className="h-full w-[47%] flex flex-col justify-center border rounded-box items-center bg-transparent">
+              <input
+                className="bg-transparent border w-[80%] rounded-full text-white text-2xl font-extralight pb-1 pl-4"
+                placeholder="Search Project"
+              ></input>
+              <button className="btn btn-outline btn-success rounded-full w-36 mt-4">
+                Search
+              </button>
+            </div>
+          </div>
+          <div className="border w-full h-[77%] rounded-3xl">sadsad</div>
+          {/* --------------------------------------------------------------------------------------------------------------- */}
         </div>
         <div
           id="right"

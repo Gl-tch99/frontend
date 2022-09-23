@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { Navigate, useNavigate } from "react-router";
 import axios from "axios";
 import { IoMdRemoveCircleOutline } from "react-icons/io";
+import { Link } from "react-router-dom";
 
 export default function Register() {
   const [SkillInput, setSkillInput] = useState("");
@@ -82,7 +83,10 @@ export default function Register() {
         break;
       }
       case "email": {
-        if (value === "" || !value.match(/^([A-z]+)*(@\w+)*([.com, .org])+$/))
+        if (
+          value === "" ||
+          !value.match(/^([A-z0-9]+)*(@\w+)*([.com, .org])+$/)
+        )
           setErrors({
             ...Errors,
             [field]: true,
@@ -234,8 +238,26 @@ export default function Register() {
     <div className="flex justify-center items-start h-screen w-screen lg:items-center">
       <div
         className="flex flex-col flex-wrap 
-       items-center rounded-3xl h-5/6 w-5/6 bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-30 border lg:flex overflow-x-hidden md:overflow-x-hidden scrollbar-hide bg-black  md:h-4/5 sm:mt-10 md:mt-10 mt-10"
+       items-center rounded-3xl h-[78%] w-5/6 bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-30 border lg:flex overflow-x-hidden md:overflow-x-hidden scrollbar-hide lg:h-5/6 lg:mt-20 md:h-4/5 sm:mt-10 md:mt-10 relative "
       >
+        <div className="absolute top-0 right-0 m-8">
+          <Link to={"/"} className="btn btn-circle btn-outline ">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          </Link>
+        </div>
         <div className="h-3/4 w-3/4 mt-2 items-center ">
           <form>
             <div className="flex flex-col items-center justify-center h-full w-full mt-12">
@@ -502,7 +524,7 @@ export default function Register() {
                 <div className="col w-full lg:w-full mt-2 lg:mt-0">
                   <button
                     type="submit"
-                    className="bg-green-900 rounded-full mt-4 text-white font-extralight text-2xl py-2 px-5 pb-3"
+                    className="btn btn-outline btn-success rounded-full mt-4 text-white font-extralight text-2xl py-2 px-5 pb-3"
                     disabled={
                       Errors.firstname ||
                       Errors.lastname ||

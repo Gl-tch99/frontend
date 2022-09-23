@@ -32,9 +32,9 @@ export default function Projectadd() {
     statustouched: false,
   });
 
-  useEffect(() => {
-    console.log(Project);
-  }, [Project]);
+  // useEffect(() => {
+  //   console.log("add proj");
+  // }, []);
 
   const handleChange = (event) => {
     setUser((Project) => ({
@@ -156,7 +156,8 @@ export default function Projectadd() {
         authorization: " Bearer " + localStorage.token,
       },
     }).then((response) => {
-      navigate("/home");
+      // navigate("/home");
+      console.log(response);
     });
   };
 
@@ -304,69 +305,12 @@ export default function Projectadd() {
                     }`}
                     name="payment"
                     onChange={handleChange}
-                    value={User.mobile}
+                    value={Project.payment}
                     onBlur={validate}
                   ></input>
                 </div>
               </div>
               {/*------------------------------------------------------------------------------------------------------------*/}
-              {/* <div className="row flex flex-col lg:flex-row items-center justify-around lg:gap-4 lg:w-full lg:mt-4 w-3/4">
-                <div className="col w-full lg:w-1/2 mt-2 lg:mt-0">
-                  <label className="text-white font-extralight text-2xl pl-4 py-4 self-start ">
-                    Password:
-                    {`${
-                      Errors.password && User.password !== ""
-                        ? User.password.length < 8 || User.password.length > 36
-                          ? " Must be 8-36 characters"
-                          : ""
-                        : ""
-                    }`}
-                  </label>
-                  <input
-                    type="password"
-                    className={`bg-transparent border rounded-full w-full h-8 shrink focus:outline-none focus:ring focus:border-blue-500 focus:border-0 mt-2 pb-1 text-white text-xl font-extralight pl-4
-                    ${
-                      Errors.password &&
-                      (Errors.password
-                        ? "ring ring-red-800 border-0 outline-none "
-                        : "ring ring-green-500 border-0 outline-none ")
-                    }`}
-                    placeholder={`${
-                      Errors.password && User.password === "" ? "Required" : ""
-                    }`}
-                    name="password"
-                    onChange={handleChange}
-                    value={User.password}
-                    onBlur={validate}
-                  ></input>
-                </div>
-                <div className="col w-full lg:w-1/2 mt-2 lg:mt-0">
-                  <label className="text-white font-extralight text-2xl pl-4 py-4 self-start">
-                    Confirm Password:
-                  </label>
-                  <input
-                    type="password"
-                    className={`bg-transparent border rounded-full w-full h-8 shrink focus:outline-none focus:ring focus:border-blue-500 focus:border-0 mt-2 pb-1 text-white text-xl font-extralight pl-4
-                    ${
-                      Errors.confirmpassword &&
-                      (Errors.confirmpassword
-                        ? "ring ring-red-800 border-0 outline-none "
-                        : "ring ring-green-500 border-0 outline-none ")
-                    }}`}
-                    placeholder={`${
-                      Errors.confirmpassword && Errors.confirmpassword === ""
-                        ? "Required"
-                        : ""
-                    }`}
-                    name="confirmpassword"
-                    onChange={(event) => {
-                      setCpass(event.target.value);
-                    }}
-                    value={Cpass}
-                    onBlur={validate}
-                  ></input>
-                </div>
-              </div> */}
               {/*------------------------------------------------------------------------------------------------------------*/}
               <div className="row flex flex-col lg:flex-row items-center justify-around lg:gap-4 lg:w-full lg:mt-4 w-3/4">
                 <div className="col w-full lg:w-full mt-2 lg:mt-0">
@@ -493,9 +437,7 @@ export default function Projectadd() {
                         ? false
                         : true
                     }
-                    onClick={() => {
-                      handleSubmitData();
-                    }}
+                    onClick={handleSubmitData}
                   >
                     Sign-Up
                   </button>

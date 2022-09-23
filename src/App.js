@@ -95,20 +95,7 @@ function App() {
                 )
               }
             />
-            <Route
-              path="/addproj"
-              element={
-                LoggedIn ? (
-                  LargeScreen ? (
-                    <Projectadd />
-                  ) : (
-                    <Projectadd />
-                  )
-                ) : (
-                  <Navigate to="/" />
-                )
-              }
-            />
+            <Route path="/addproj" element={<Projectadd />} />
             <Route
               path="/projects"
               element={
