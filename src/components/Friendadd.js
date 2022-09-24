@@ -36,7 +36,7 @@ export default function () {
       .catch((error) => console.log(error));
   };
 
-  const handleRequest = async (id) => {
+  const handleRequest = async (friend) => {
     console.log(Search);
     await axios
       .put(`http://localhost:3000/users/sendreq`, {
@@ -44,7 +44,7 @@ export default function () {
           authorization: "Bearer " + localStorage.token,
         },
         data: {
-          id,
+          friend,
         },
       })
       .then((response) => {
@@ -57,18 +57,17 @@ export default function () {
 
   return (
     <div className="h-full w-full flex flex-col justify-start items-center gap-2">
-      <div className=" flex h-[10%] w-[98%] border rounded-3xl mt-2 ">
+      <div className=" flex h-[8%] lg:h-[12%] w-[98%] border rounded-3xl mt-2 ">
         <input
           type="text"
-          className="bg-transparent text-2xl font-extralight ml-4 focus:outline-none w-[75%] pb-1"
+          className="bg-transparent text-xl font-extralight ml-4 focus:outline-none w-[75%] pb-1"
           placeholder="Search for Friends?"
           onChange={(event) => {
             setSearch(event.target.value);
-            console.log(Search);
           }}
         ></input>
         <button
-          className="p-2 border rounded-full w-40 bg-green-900 flex justify-center"
+          className="py-2 border rounded-3xl pt-3 w-40 lg:w-40 bg-green-900 flex justify-center"
           onClick={() => {
             handleSearch();
           }}
@@ -106,7 +105,7 @@ export default function () {
                       <button
                         className="btn btn-primary z-10"
                         onClick={() => {
-                          handleRequest(sres._id);
+                          handleRequest(sres);
                         }}
                       >
                         <IoIosAddCircleOutline size="30" />

@@ -4,7 +4,6 @@ import Nav from "./components/Nav";
 import { Navigate, Route, Router, Routes, useNavigate } from "react-router-dom";
 import Home from "./pages/Home";
 import Friends from "./pages/Friends";
-import Projects from "./pages/Projects";
 import Profile from "./pages/Profile";
 import MobileHome from "./pages/MobileHome";
 import Login from "./components/Login";
@@ -14,7 +13,9 @@ import Register from "./components/Register";
 import jwtDecode from "jwt-decode";
 import axios from "axios";
 import Projectadd from "./components/Projectadd";
-
+import MobileProjects from "./pages/MobileProjects";
+import useLocalStorage from "./components/useLocalStorage";
+import MobileProfile from "./components/MobileProfile";
 export const UserContext = React.createContext({ user: {} });
 export const ThemeContext = React.createContext(null);
 export const ProjectsContext = React.createContext([{}]);
@@ -24,6 +25,7 @@ function App() {
   const [LoggedIn, setLoggedIn] = useState(false);
   const [LargeScreen, setLargeScreen] = useState(true);
   const [User, setUser] = useState({});
+  const [Local, setLocal] = useLocalStorage("User");
   const value = useMemo(
     () => ({
       User,
@@ -54,6 +56,38 @@ function App() {
         return false;
       });
   };
+
+  // useEffect(() => {
+  //   axios.put("http://localhost:3000/users/updateuser", {
+  //     headers: {
+  //       authorization: " Bearer " + localStorage.token,
+  //     },
+  //     data:{
+  //       User,
+  //     }
+  //   });
+  // }, [User])
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:3000/users/verifytoken", {
+        headers: {
+          authorization: " Bearer " + localStorage.token,
+        },
+      })
+      .then((res) => {
+        console.log(res);
+        const users = res.data;
+        setUser(users);
+        setLoggedIn(true);
+        setLocal(users);
+        return true;
+      })
+      .catch((error) => {
+        console.log(error);
+        return false;
+      });
+  }, []);
 
   useEffect(() => {
     let width = window.innerWidth;
@@ -103,7 +137,7 @@ function App() {
                   LargeScreen ? (
                     <Navigate to="/home" />
                   ) : (
-                    <Projects />
+                    <MobileProjects />
                   )
                 ) : (
                   <Navigate to="/" />
@@ -131,7 +165,7 @@ function App() {
                   LargeScreen ? (
                     <Navigate to="/home" />
                   ) : (
-                    <Profile />
+                    <MobileProfile />
                   )
                 ) : (
                   <Navigate to="/" />

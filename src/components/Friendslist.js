@@ -4,6 +4,7 @@ import {
   IoIosCheckmarkCircleOutline,
   IoIosCloseCircleOutline,
 } from "react-icons/io";
+import { ImProfile } from "react-icons/im";
 
 export default function Friendslist() {
   const { LoggedIn, setLoggedIn, User, setUser } = useContext(UserContext);
@@ -34,23 +35,39 @@ export default function Friendslist() {
                       </p>
                     </div>
                   </div>
-                  <div className="flex-row flex justify-center items-center gap-2 w-[42%] h-full">
-                    <button
-                      className="btn btn-primary z-10"
-                      onClick={() => {
-                        console.log("button 1");
-                      }}
+                  <div className="flex-row flex justify-end items-center gap-2 w-[42%] h-full">
+                    <label
+                      htmlFor="my-modal-4"
+                      className="btn modal-button btn-md btn-outline btn-success mr-6"
                     >
-                      <IoIosCheckmarkCircleOutline size="30" />
-                    </button>
-                    <button
+                      <ImProfile size="28" />
+                    </label>
+
+                    <input
+                      type="checkbox"
+                      id="my-modal-4"
+                      className="modal-toggle"
+                    />
+                    <label
+                      htmlFor="my-modal-4"
+                      className="modal cursor-pointer"
+                    >
+                      <label className="modal-box relative" for="">
+                        <h3 className="text-lg font-bold"></h3>
+                        <p className="py-4">
+                          You've been selected for a chance to get one year of
+                          subscription to use Wikipedia for free!
+                        </p>
+                      </label>
+                    </label>
+                    {/* <button
                       className="btn btn-ghost z-10"
                       onClick={() => {
                         console.log("button 2");
                       }}
                     >
                       <IoIosCloseCircleOutline size="30" />
-                    </button>
+                    </button> */}
                   </div>
                 </div>
               </div>

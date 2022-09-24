@@ -4,9 +4,52 @@ import {
   IoIosCheckmarkCircleOutline,
   IoIosCloseCircleOutline,
 } from "react-icons/io";
+import axios from "axios";
+import useLocalStorage from "./useLocalStorage";
 
 export default function Friendreq() {
   const { LoggedIn, setLoggedIn, User, setUser } = useContext(UserContext);
+  const [value, setValue] = useLocalStorage("User");
+
+  const handleAcceptReq = async (friend) => {
+    const user = User;
+    console.log("frnds:" + user);
+    console.log(user);
+    const frnds = user.friends;
+    frnds.push({
+      lastname: friend.lastname,
+      firstname: friend.firstname,
+      skillsets: friend.skillsets,
+      email: friend.email,
+      userid: friend.userid,
+    });
+    console.log(frnds);
+    const frndsreq = user.friendsreq.filter((ele) => {
+      return ele !== friend;
+    });
+
+    await axios
+      .put(`http://localhost:3000/users/acceptreq`, {
+        headers: {
+          authorization: "Bearer " + localStorage.token,
+        },
+        data: {
+          user,
+          frnds,
+          frndsreq,
+        },
+      })
+      .then((response) => {
+        console.log(response.data);
+        const token = response.data.token;
+        localStorage.setItem("token", token);
+        setValue(User);
+        // const users = response.data;
+        // setUser(users);
+        // console.log(users);
+      })
+      .catch((error) => console.log(error));
+  };
   return (
     <>
       {User.friends !== 0
@@ -25,7 +68,7 @@ export default function Friendreq() {
                   >
                     <div>
                       <h2 className="card-title justify-start pl-8 text-white font-extralight ">
-                        {friend.name}
+                        {friend.lastname}
                       </h2>
                     </div>
                     <div>
@@ -38,7 +81,7 @@ export default function Friendreq() {
                     <button
                       className="btn btn-primary z-10"
                       onClick={() => {
-                        console.log("button 1");
+                        handleAcceptReq(friend);
                       }}
                     >
                       <IoIosCheckmarkCircleOutline size="30" />

@@ -6,6 +6,9 @@ import { UserContext } from "../App";
 import Friendslist from "../components/Friendslist";
 import Friendreq from "../components/Friendreq";
 import Friendadd from "../components/Friendadd";
+import Projects from "../components/Projects";
+import UserProjects from "../components/UserProjects";
+import Profile from "./Profile";
 
 export default function Home() {
   const navigate = useNavigate();
@@ -15,13 +18,6 @@ export default function Home() {
   useEffect(() => {
     console.log(User);
   }, [User, LoggedIn]);
-
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    setLoggedIn(false);
-    setUser({});
-    navigate("/");
-  };
 
   return (
     <div className="flex justify-center items-center h-screen w-screen ">
@@ -35,9 +31,9 @@ export default function Home() {
         >
           <div
             id="left-1"
-            className="flex flex-col justify-evenly items-center rounded-3xl w-full h-[60%] border overflow-scroll md:overflow-auto scrollbar-hide "
+            className="flex flex-col justify-evenly items-center rounded-3xl w-full h-[60%] border overflow-scroll md:overflow-auto scrollbar-hide gap-8"
           >
-            <div className=" w-full flex justify-evenly ">
+            <div className=" w-full flex justify-evenly items-center overflow-visible">
               {/* <input
                 type="text"
                 className=" flex justify-start items-center h-[10%] w-[93%] border rounded-3xl mt-2"
@@ -45,7 +41,7 @@ export default function Home() {
                 placeholder="Search for Friends?"
               ></input> */}
 
-              <div className="tabs w-full justify-center h-10">
+              <div className="tabs w-full justify-center ">
                 <button
                   className={`tab tab-md tab-lifted text-lg h-10 ${
                     FriendDiv === "Friendslist" ? "tab-active" : ""
@@ -78,7 +74,7 @@ export default function Home() {
                 </button>
               </div>
             </div>
-            <div className="h-[85%] w-[98%] rounded-3xl overflow-scroll scrollbar-hide">
+            <div className="h-[85%] w-[98%] rounded-3xl overflow-scroll scrollbar-hide justify-self-end ">
               <div className="flex flex-col items-center h-full mt-4 gap-3">
                 {/* ------------------------------------------------------------------------ */}
                 {FriendDiv === "Friendslist" ? (
@@ -95,7 +91,9 @@ export default function Home() {
           <div
             id="left-2"
             className="rounded-3xl w-full h-[38%] border overflow-scroll md:overflow-auto scrollbar-hide"
-          ></div>
+          >
+            <UserProjects />
+          </div>
         </div>
         <div
           id="middle"
@@ -105,12 +103,12 @@ export default function Home() {
           <div className="flex h-[20%] w-[100%] flex-row mt-1 ">
             <div className="h-full w-[47%] flex justify-center border rounded-box items-center bg-transparent">
               <div className="text-white text-2xl  font-extralight flex flex-col ">
-                <div className="text-center">Add Project.</div>
-                <div className="text-white text-xl font-extralight">
+                <div className="text-center text-xl">Add Project.</div>
+                <div className="text-white text-lg font-extralight">
                   Create or Join a Project.
                 </div>
                 <button
-                  className="btn btn-outline btn-success rounded-full w-30 mt-4"
+                  className="btn btn-outline btn-success btn-sm rounded-full  mt-4"
                   onClick={() => {
                     navigate("/addproj");
                   }}
@@ -126,19 +124,37 @@ export default function Home() {
                 className="bg-transparent border w-[80%] rounded-full text-white text-2xl font-extralight pb-1 pl-4"
                 placeholder="Search Project"
               ></input>
-              <button className="btn btn-outline btn-success rounded-full w-36 mt-4">
+              <button className="btn btn-outline btn-success btn-sm rounded-full w-36 mt-4">
                 Search
               </button>
             </div>
           </div>
-          <div className="border w-full h-[77%] rounded-3xl">sadsad</div>
+          <div className="border w-full h-[77%] rounded-3xl flex flex-col justify-start items-center">
+            {/* --------------------------------------------------------------------------------------------------------------------- */}
+
+            {/* <div className="w-[98%] h-[98%] rounded-3xl flex flex-col shrink-0 justify-start gap-2 items-center mt-2 pt-2 py-2 overflow-scroll scrollbar-hide">
+              <div className="card w-full bg-transparent shadow-xl shrink-0 border">
+                <div className="card-body">
+                  <h2 className="card-title"></h2>
+                  <p>If a dog chews shoes whose shoes does he choose?</p>
+                  <div className="card-actions justify-end">
+                    <button className="btn btn-primary">Buy Now</button>
+                  </div>
+                </div>
+              </div>
+            </div> */}
+            <div className="w-[96%] h-[98%] rounded-3xl flex flex-col shrink-0 justify-start gap-2 items-center mt-2 pt-2 py-2 overflow-scroll scrollbar-hide">
+              <Projects />
+            </div>
+            {/* --------------------------------------------------------------------------------------------------------------------- */}
+          </div>
           {/* --------------------------------------------------------------------------------------------------------------- */}
         </div>
         <div
           id="right"
-          className=" flex flex-col justify-start items-center rounded-3xl w-[25%] h-[93%] border overflow-scroll md:overflow-auto scrollbar-hide"
+          className=" flex flex-col justify-start items-center rounded-3xl w-[25%] h-[93%] border overflow-scroll md:overflow-auto scrollbar-hide gap-4"
         >
-          <div>
+          {/* <div>
             <button
               className="bg-green-900 rounded-full mt-4 text-white font-extralight text-2xl py-2 px-5 pb-3 self-end"
               onClick={() => {
@@ -147,7 +163,8 @@ export default function Home() {
             >
               Logout
             </button>
-          </div>
+          </div> */}
+          <Profile />
         </div>
       </div>
     </div>
