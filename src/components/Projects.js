@@ -1,7 +1,9 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { UserContext } from "../App";
 
 export default function Projects() {
+  const { LoggedIn, setLoggedIn, User, setUser } = useContext(UserContext);
   const [Projects, setProjects] = useState([]);
 
   useEffect(() => {
@@ -19,6 +21,25 @@ export default function Projects() {
         console.log("Error" + err);
       });
   }, []);
+
+  const handleJoin = (project) => {
+    axios
+      .put("http://localhost:3000/projects/fetchdata", {
+        headers: {
+          authorization: " Bearer " + localStorage.token,
+        },
+        data: {
+          project,
+        },
+      })
+      .then((res) => {
+        console.log(res);
+        setProjects(res.data);
+      })
+      .catch((err) => {
+        console.log("Error" + err);
+      });
+  };
 
   return (
     <>
@@ -43,7 +64,12 @@ export default function Projects() {
                       </p>
                     </div>
                     <div className="self-end w-[25%] flex justify-end ">
-                      <button className="btn btn-outline btn-success rounded-full w-36 mt-4 text-xl font-extralight self-end mb-4 mr-2">
+                      <button
+                        className="btn btn-outline btn-success rounded-full w-36 mt-4 text-xl font-extralight self-end mb-4 mr-2"
+                        onClick={() => {
+                          handleJoin(project);
+                        }}
+                      >
                         Join
                       </button>
                     </div>

@@ -57,7 +57,7 @@ export default function () {
 
   return (
     <div className="h-full w-full flex flex-col justify-start items-center gap-2">
-      <div className=" flex h-[8%] lg:h-[12%] w-[98%] border rounded-3xl mt-2 ">
+      <div className=" flex h-[8%]  lg:h-[12%] w-[98%] border rounded-3xl mt-2 ">
         <input
           type="text"
           className="bg-transparent text-xl font-extralight ml-4 focus:outline-none w-[75%] pb-1"
@@ -67,7 +67,7 @@ export default function () {
           }}
         ></input>
         <button
-          className="py-2 border rounded-3xl pt-3 w-40 lg:w-40 bg-green-900 flex justify-center"
+          className="py-2 border rounded-3xl pt-3 lg:pt-4  md:pt-6 w-40 md:w-52 lg:w-40 bg-green-900 flex justify-center"
           onClick={() => {
             handleSearch();
           }}

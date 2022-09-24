@@ -24,6 +24,7 @@ export default function Profile() {
           Logout
         </button>
       </div>
+      <div className="divider"></div>
       <div>
         <img
           className="mask mask-hexagon outline-offset-2 outline-success"
@@ -38,6 +39,7 @@ export default function Profile() {
           {User.lastname}
         </div>
       </div>
+      <div className="divider"></div>
       <div className="flex-row justify-center w-full">
         <div className="flex-row justify-center w-full">
           <div className="self-start text-white mt-1 text-2xl font-extralight capitalize ml-4">
@@ -47,6 +49,7 @@ export default function Profile() {
             {User.description}
           </div>
         </div>
+        <div className="divider"></div>
         <div className="flex-row justify-center w-full">
           <div className="self-start text-right pr-12 w-full text-white mt-2 text-2xl font-extralight capitalize ml-4">
             Email:
@@ -55,18 +58,23 @@ export default function Profile() {
             {User.email}
           </div>
         </div>
+        <div className="divider"></div>
         <div className="self-start w-full text-white mt-1 text-2xl font-extralight capitalize ml-4">
           Skillset:
         </div>
         <div className="flex gap-2 w-3/4 flex-wrap mt-2">
           {User.skillsets.map((skill, index) => {
             return (
-              <div className="border rounded-full text-center py-2 px-6 text-white mt-1 text-xl font-extralight capitalize ml-4">
+              <div
+                className="border rounded-full text-center py-2 px-6 text-white mt-1 text-xl font-extralight capitalize ml-4"
+                key={index}
+              >
                 {skill}
               </div>
             );
           })}
         </div>
+        <div className="divider"></div>
         <div className="self-end text-end pr-8 text-white mt-1 text-2xl font-extralight capitalize ml-4">
           Experience:
         </div>
@@ -74,7 +82,10 @@ export default function Profile() {
           <div className="mr-6 ">
             {User.experience.map((exp, index) => {
               return (
-                <div className="border rounded-full text-center py-2 px-6 text-white mt-1 text-xl font-extralight capitalize ml-4">
+                <div
+                  className="border rounded-full text-center py-2 px-6 text-white mt-1 text-xl font-extralight capitalize ml-4"
+                  key={index}
+                >
                   {`${exp.experience} - ${exp.duration}`}
                 </div>
               );

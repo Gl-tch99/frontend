@@ -28,6 +28,7 @@ export default function MobileProfile() {
             Logout
           </button>
         </div>
+
         <div>
           <img
             className="mask mask-hexagon outline-offset-2 outline-success"
@@ -65,7 +66,10 @@ export default function MobileProfile() {
           <div className="flex gap-2 w-3/4 flex-wrap mt-2">
             {User.skillsets.map((skill, index) => {
               return (
-                <div className="border rounded-full text-center py-2 px-6 text-white mt-1 text-xl font-extralight capitalize ml-4">
+                <div
+                  className="border rounded-full text-center py-2 px-6 text-white mt-1 text-xl font-extralight capitalize ml-4"
+                  key={index}
+                >
                   {skill}
                 </div>
               );
@@ -78,7 +82,10 @@ export default function MobileProfile() {
             <div className="mr-6 ">
               {User.experience.map((exp, index) => {
                 return (
-                  <div className="border rounded-full text-center py-2 px-6 text-white mt-1 text-xl font-extralight capitalize ml-4">
+                  <div
+                    className="border rounded-full text-center py-2 px-6 text-white mt-1 text-xl font-extralight capitalize ml-4"
+                    key={index}
+                  >
                     {`${exp.experience} - ${exp.duration}`}
                   </div>
                 );

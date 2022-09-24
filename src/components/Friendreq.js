@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { UserContext } from "../App";
 import {
   IoIosCheckmarkCircleOutline,
@@ -29,7 +29,7 @@ export default function Friendreq() {
     });
 
     await axios
-      .put(`http://localhost:3000/users/acceptreq`, {
+      .patch(`http://localhost:3000/users/acceptreq`, {
         headers: {
           authorization: "Bearer " + localStorage.token,
         },
@@ -43,13 +43,19 @@ export default function Friendreq() {
         console.log(response.data);
         const token = response.data.token;
         localStorage.setItem("token", token);
-        setValue(User);
+        setValue(user);
+        setUser(user);
         // const users = response.data;
         // setUser(users);
         // console.log(users);
       })
       .catch((error) => console.log(error));
   };
+
+  useEffect(() => {
+    console.log("User");
+    console.log(User);
+  }, [User.friendsreq]);
   return (
     <>
       {User.friends !== 0
