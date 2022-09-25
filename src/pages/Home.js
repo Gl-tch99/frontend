@@ -9,7 +9,7 @@ import Friendadd from "../components/Friendadd";
 import Projects from "../components/Projects";
 import UserProjects from "../components/UserProjects";
 import Profile from "./Profile";
-import Tilt from "react-vanilla-tilt";
+import Tilt from "react-parallax-tilt";
 
 export default function Home() {
   const navigate = useNavigate();
@@ -102,7 +102,12 @@ export default function Home() {
         >
           {/* --------------------------------------------------------------------------------------------------------------- */}
           <div className="flex h-[20%] w-[100%] flex-row mt-1 ">
-            <div className="h-full w-[47%] flex justify-center border rounded-box items-center bg-transparent">
+            {/* <div className="h-full w-[47%] flex justify-center border rounded-box items-center bg-transparent"> */}
+            <Tilt
+              glareEnable={true}
+              glareMaxOpacity={1}
+              className="h-full w-[47%] flex flex-col justify-center border rounded-box items-center bg-black m-2"
+            >
               <div className="text-white text-2xl  font-extralight flex flex-col ">
                 <div className="text-center text-xl">Add Project.</div>
                 <div className="text-white text-lg font-extralight">
@@ -117,8 +122,8 @@ export default function Home() {
                   Add Project
                 </button>
               </div>
-              <div></div>
-            </div>
+            </Tilt>
+            {/* </div> */}
             <div className="divider divider-horizontal">OR</div>
             <Tilt
               options={{ scale: 0.5, max: 25 }}

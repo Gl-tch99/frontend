@@ -39,38 +39,7 @@ function App() {
 
   const verifytoken = async () => {
     await axios
-      .get("http://localhost:3000/users/verifytoken", {
-        headers: {
-          authorization: " Bearer " + localStorage.token,
-        },
-      })
-      .then((res) => {
-        console.log(res);
-        const users = res.data;
-        setUser(users);
-        setLoggedIn(true);
-        return true;
-      })
-      .catch((error) => {
-        console.log(error);
-        return false;
-      });
-  };
-
-  // useEffect(() => {
-  //   axios.put("http://localhost:3000/users/updateuser", {
-  //     headers: {
-  //       authorization: " Bearer " + localStorage.token,
-  //     },
-  //     data:{
-  //       User,
-  //     }
-  //   });
-  // }, [User])
-
-  useEffect(() => {
-    axios
-      .get("http://localhost:3000/users/verifytoken", {
+      .get("/users/verifytoken", {
         headers: {
           authorization: " Bearer " + localStorage.token,
         },
@@ -87,7 +56,22 @@ function App() {
         console.log(error);
         return false;
       });
-  }, []);
+  };
+
+  // useEffect(() => {
+  //   axios
+  //     .get("http://localhost:3000/users/refreshtoken", {
+  //       headers: {
+  //         authorization: "Bearer " + localStorage.token,
+  //       },
+  //     })
+  //     .then((res) => {
+  //       console.log("Result");
+  //       console.log(res);
+  //       setUser(res.data.data);
+  //       localStorage.setItem("token", res.data.token);
+  //     });
+  // }, [User]);
 
   useEffect(() => {
     let width = window.innerWidth;

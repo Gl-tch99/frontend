@@ -36,10 +36,7 @@ export default function Friendslist() {
                     </div>
                   </div>
                   <div className="flex-row flex justify-end items-center gap-2 w-[42%] h-full">
-                    <label
-                      htmlFor="my-modal-4"
-                      className="btn modal-button btn-md btn-outline btn-success mr-6"
-                    >
+                    <label className="btn modal-button btn-md btn-outline btn-success mr-6">
                       <ImProfile size="28" />
                     </label>
 
@@ -48,11 +45,8 @@ export default function Friendslist() {
                       id="my-modal-4"
                       className="modal-toggle"
                     />
-                    <label
-                      htmlFor="my-modal-4"
-                      className="modal cursor-pointer"
-                    >
-                      <label className="modal-box relative" for="">
+                    <label className="modal cursor-pointer">
+                      <label className="modal-box relative">
                         <h3 className="text-lg font-bold"></h3>
                         <p className="py-4">
                           You've been selected for a chance to get one year of

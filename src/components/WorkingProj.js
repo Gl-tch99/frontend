@@ -39,7 +39,6 @@ export default function WorkingProj() {
                     ) : (
                       ""
                     )}
-                    {project.status !== "Listed" ? <option>Listed</option> : ""}
                   </select>
                 </div>
               </div>

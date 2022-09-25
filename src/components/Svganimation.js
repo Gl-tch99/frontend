@@ -8,7 +8,7 @@ function Svganimation() {
       { path: "#blob1" },
       { path: "#blob2" },
       // { path: "#blob2" },
-      { repeat: 999, duration: 4000, yoyo: true }
+      { repeat: 999, duration: 6000, yoyo: true }
     );
     // const tween2 = KUTE.fromTo(
     //   "#blobl1",
@@ -21,7 +21,7 @@ function Svganimation() {
   }, []);
   return (
     <>
-      <div className="absolute m-0 p-0 left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex justify-center items-center z-1 opacity-90 bg-transparent z-0 overflow-hidden ">
+      <div className="absolute m-0 p-0 left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex justify-center items-center z-1 opacity-90 bg-transparent z-0 overflow-hidden animate-[spin 3s linear infinite]">
         <svg
           id="visual"
           viewBox="0 0 900 600"
