@@ -62,7 +62,7 @@ export default function Friendreq() {
         ? User.friendsreq.map((friend, index) => {
             return (
               <div
-                className=" w-[93%] bg-transparent border text-neutral-content h-[20%] felx justify-center items-center cursor-pointer rounded-2xl"
+                className=" w-[93%] bg-transparent border text-neutral-content h-[20%] flex justify-center items-center cursor-pointer rounded-2xl"
                 key={index}
               >
                 <div className=" flex flex-row w-full h-full">

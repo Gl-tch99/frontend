@@ -9,6 +9,7 @@ import Friendadd from "../components/Friendadd";
 import Projects from "../components/Projects";
 import UserProjects from "../components/UserProjects";
 import Profile from "./Profile";
+import Tilt from "react-vanilla-tilt";
 
 export default function Home() {
   const navigate = useNavigate();
@@ -43,7 +44,7 @@ export default function Home() {
 
               <div className="tabs w-full justify-center ">
                 <button
-                  className={`tab tab-md tab-lifted text-lg h-10 ${
+                  className={`tab tab-md tab-lifted text-lg h-14 w-1/3 ${
                     FriendDiv === "Friendslist" ? "tab-active" : ""
                   }`}
                   onClick={() => {
@@ -53,7 +54,7 @@ export default function Home() {
                   Friends List
                 </button>
                 <button
-                  className={`tab tab-md tab-lifted text-lg h-10 ${
+                  className={`tab tab-md tab-lifted text-lg h-14 w-1/3 ${
                     FriendDiv === "Friendreq" ? "tab-active" : ""
                   }`}
                   onClick={() => {
@@ -63,7 +64,7 @@ export default function Home() {
                   Friend Req
                 </button>
                 <button
-                  className={`tab tab-md tab-lifted text-lg h-10 ${
+                  className={`tab tab-md tab-lifted text-lg h-14 w-1/3 ${
                     FriendDiv === "Friendadd" ? "tab-active" : ""
                   }`}
                   onClick={() => {
@@ -74,7 +75,7 @@ export default function Home() {
                 </button>
               </div>
             </div>
-            <div className="h-[85%] w-[98%] rounded-3xl overflow-scroll scrollbar-hide justify-self-end ">
+            <div className="h-[85%] w-[98%] rounded-3xl justify-self-end ">
               <div className="flex flex-col items-center h-full mt-4 gap-3">
                 {/* ------------------------------------------------------------------------ */}
                 {FriendDiv === "Friendslist" ? (
@@ -90,7 +91,7 @@ export default function Home() {
           </div>
           <div
             id="left-2"
-            className="rounded-3xl w-full h-[38%] border overflow-scroll md:overflow-auto scrollbar-hide"
+            className="rounded-3xl w-full h-[38%] border overflow-scroll scrollbar-hide"
           >
             <UserProjects />
           </div>
@@ -119,7 +120,14 @@ export default function Home() {
               <div></div>
             </div>
             <div className="divider divider-horizontal">OR</div>
-            <div className="h-full w-[47%] flex flex-col justify-center border rounded-box items-center bg-transparent">
+            <Tilt
+              options={{ scale: 0.5, max: 25 }}
+              style={{
+                width: "47%",
+                backgroundColor: "transparent",
+              }}
+              className="h-full w-[47%] flex flex-col justify-center border rounded-box items-center bg-transparent m-2"
+            >
               <input
                 className="bg-transparent border w-[80%] rounded-full text-white text-2xl font-extralight pb-1 pl-4"
                 placeholder="Search Project"
@@ -127,7 +135,7 @@ export default function Home() {
               <button className="btn btn-outline btn-success btn-sm rounded-full w-36 mt-4">
                 Search
               </button>
-            </div>
+            </Tilt>
           </div>
           <div className="border w-full h-[77%] rounded-3xl flex flex-col justify-start items-center">
             {/* --------------------------------------------------------------------------------------------------------------------- */}

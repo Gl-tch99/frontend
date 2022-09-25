@@ -10,7 +10,7 @@ export default function Projects() {
     axios
       .get("http://localhost:3000/projects/fetchdata", {
         headers: {
-          authorization: " Bearer " + localStorage.token,
+          authorization: "Bearer " + localStorage.token,
         },
       })
       .then((res) => {
@@ -20,13 +20,13 @@ export default function Projects() {
       .catch((err) => {
         console.log("Error" + err);
       });
-  }, []);
+  }, [User]);
 
-  const handleJoin = (project) => {
-    axios
-      .put("http://localhost:3000/projects/fetchdata", {
+  const handleJoin = async (project) => {
+    await axios
+      .put("http://localhost:3000/users/joinproj", {
         headers: {
-          authorization: " Bearer " + localStorage.token,
+          authorization: "Bearer " + localStorage.token,
         },
         data: {
           project,
@@ -34,7 +34,8 @@ export default function Projects() {
       })
       .then((res) => {
         console.log(res);
-        setProjects(res.data);
+        // const token = res.data.token;
+        // localStorage.setItem("token", token);
       })
       .catch((err) => {
         console.log("Error" + err);
