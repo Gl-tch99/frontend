@@ -10,16 +10,40 @@ import Projects from "../components/Projects";
 import UserProjects from "../components/UserProjects";
 import Profile from "./Profile";
 import Tilt from "react-parallax-tilt";
+import useLocalStorage from "../components/useLocalStorage";
+import axios from "axios";
 
 export default function Home() {
   const navigate = useNavigate();
   const { LoggedIn, setLoggedIn, User, setUser } = useContext(UserContext);
   const [FriendDiv, setFriendDiv] = useState("Friendslist");
+  const [Local, setLocal] = useLocalStorage("User");
 
   useEffect(() => {
-    console.log(User);
-  }, [User, LoggedIn]);
+    console.log("refreshed");
+    let result = verifytoken();
+    console.log(result);
+  }, [User]);
 
+  const verifytoken = async () => {
+    await axios
+      .get("/users/verifytoken", {
+        headers: {
+          authorization: " Bearer " + localStorage.token,
+        },
+      })
+      .then((res) => {
+        console.log(res);
+        const users = res.data;
+        setLoggedIn(true);
+        setLocal(users);
+        return true;
+      })
+      .catch((error) => {
+        console.log(error);
+        return false;
+      });
+  };
   return (
     <div className="flex justify-center items-center h-screen w-screen ">
       <div
@@ -106,7 +130,7 @@ export default function Home() {
             <Tilt
               glareEnable={true}
               glareMaxOpacity={1}
-              className="h-full w-[47%] flex flex-col justify-center border rounded-box items-center bg-black m-2"
+              className="h-full w-[47%] flex flex-col justify-center border rounded-box items-center m-2"
             >
               <div className="text-white text-2xl  font-extralight flex flex-col ">
                 <div className="text-center text-xl">Add Project.</div>
@@ -126,11 +150,8 @@ export default function Home() {
             {/* </div> */}
             <div className="divider divider-horizontal">OR</div>
             <Tilt
-              options={{ scale: 0.5, max: 25 }}
-              style={{
-                width: "47%",
-                backgroundColor: "transparent",
-              }}
+              glareEnable={true}
+              glareMaxOpacity={1}
               className="h-full w-[47%] flex flex-col justify-center border rounded-box items-center bg-transparent m-2"
             >
               <input

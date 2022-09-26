@@ -6,6 +6,14 @@ export default function WorkingProj() {
   const { LoggedIn, setLoggedIn, User, setUser } = useContext(UserContext);
   const [WorkingProj, setWorkingProj] = useState([]);
 
+  useEffect(() => {
+    console.log("rerender");
+  }, [User]);
+
+  const handleChangeStatus = () => {
+    console.log("asd");
+  };
+
   return (
     <>
       {User.projects !== 0 &&
@@ -25,7 +33,7 @@ export default function WorkingProj() {
                   </div>
                 </div>
                 <div>
-                  <select className="select select-accent w-[93%] ">
+                  {/* <select className="select select-accent w-[93%] ">
                     <option disabled selected>
                       Change status
                     </option>
@@ -39,7 +47,59 @@ export default function WorkingProj() {
                     ) : (
                       ""
                     )}
-                  </select>
+                  </select> */}
+                  <div className="dropdown dropdown-hover dropdown-end pr-2">
+                    <label tabIndex={0} className="btn m-1 text-xs">
+                      Change Status
+                    </label>
+                    <ul
+                      tabIndex={0}
+                      className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52"
+                    >
+                      {project.status !== "Working" ? (
+                        <li>
+                          <button
+                            onClick={() => {
+                              handleChangeStatus();
+                            }}
+                            value="Working"
+                          >
+                            Working
+                          </button>
+                        </li>
+                      ) : (
+                        ""
+                      )}
+                      {project.status !== "Completed" ? (
+                        <li>
+                          <button
+                            onClick={() => {
+                              handleChangeStatus();
+                            }}
+                            value="Completed"
+                          >
+                            Completed
+                          </button>
+                        </li>
+                      ) : (
+                        ""
+                      )}
+                      {project.status !== "Listed" ? (
+                        <li>
+                          <button
+                            onClick={() => {
+                              handleChangeStatus();
+                            }}
+                            value="Listed"
+                          >
+                            Listed
+                          </button>
+                        </li>
+                      ) : (
+                        ""
+                      )}
+                    </ul>
+                  </div>
                 </div>
               </div>
             );

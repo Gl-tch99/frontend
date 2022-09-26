@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { useNavigate } from "react-router";
 import { UserContext } from "../App";
+import Tilt from "react-parallax-tilt";
 
 export default function Profile() {
   const { LoggedIn, setLoggedIn, User, setUser } = useContext(UserContext);
@@ -14,23 +15,39 @@ export default function Profile() {
   };
   return (
     <>
-      <div className="self-end h-[8%]">
-        <button
-          className="btn btn-outline btn-success rounded-full mr-2 mt-2"
-          onClick={() => {
-            handleLogout();
-          }}
-        >
-          Logout
-        </button>
+      <div className="flex w-full justify-between items-center">
+        <div className="">
+          <button
+            className="btn btn-outline btn-success rounded-full mr-2 mt-2"
+            onClick={() => {
+              navigate("/edituser");
+            }}
+          >
+            Edit
+          </button>
+        </div>
+        <div className="">
+          <button
+            className="btn btn-outline btn-success rounded-full mr-2 mt-2"
+            onClick={() => {
+              handleLogout();
+            }}
+          >
+            Logout
+          </button>
+        </div>
       </div>
       <div className="divider"></div>
-      <div>
+      <Tilt
+        glareEnable={true}
+        glareMaxOpacity={0.5}
+        className="h-full w-[47%] flex flex-col justify-center rounded-box items-center m-2 mask mask-hexagon"
+      >
         <img
           className="mask mask-hexagon outline-offset-2 outline-success"
           src="https://placeimg.com/160/160/arch"
         />
-      </div>
+      </Tilt>
       <div>
         <div className="text-white text-3xl text-center font-extralight capitalize">
           {User.firstname}

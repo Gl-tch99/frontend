@@ -16,6 +16,7 @@ import Projectadd from "./components/Projectadd";
 import MobileProjects from "./pages/MobileProjects";
 import useLocalStorage from "./components/useLocalStorage";
 import MobileProfile from "./components/MobileProfile";
+import EditUser from "./components/EditUser";
 export const UserContext = React.createContext({ user: {} });
 export const ThemeContext = React.createContext(null);
 export const ProjectsContext = React.createContext([{}]);
@@ -58,21 +59,6 @@ function App() {
       });
   };
 
-  // useEffect(() => {
-  //   axios
-  //     .get("http://localhost:3000/users/refreshtoken", {
-  //       headers: {
-  //         authorization: "Bearer " + localStorage.token,
-  //       },
-  //     })
-  //     .then((res) => {
-  //       console.log("Result");
-  //       console.log(res);
-  //       setUser(res.data.data);
-  //       localStorage.setItem("token", res.data.token);
-  //     });
-  // }, [User]);
-
   useEffect(() => {
     let width = window.innerWidth;
     if (width < 1024) setLargeScreen(false);
@@ -94,7 +80,7 @@ function App() {
         {/*//040404*/}
         <Svganimation />
         {/* {!LargeScreen ? <Nav /> : ""} */}
-        <Nav />
+        {LoggedIn ? <Nav /> : ""}
         {/* <Projectadd /> */}
         <div className="container">
           <Routes>
@@ -150,6 +136,20 @@ function App() {
                     <Navigate to="/home" />
                   ) : (
                     <MobileProfile />
+                  )
+                ) : (
+                  <Navigate to="/" />
+                )
+              }
+            />
+            <Route
+              path="/edituser"
+              element={
+                LoggedIn ? (
+                  LargeScreen ? (
+                    <EditUser />
+                  ) : (
+                    <EditUser />
                   )
                 ) : (
                   <Navigate to="/" />

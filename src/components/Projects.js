@@ -1,10 +1,16 @@
 import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
 import { UserContext } from "../App";
+import useLocalStorage from "./useLocalStorage";
 
 export default function Projects() {
   const { LoggedIn, setLoggedIn, User, setUser } = useContext(UserContext);
   const [Projects, setProjects] = useState([]);
+  const [Local, setLocal] = useLocalStorage("User");
+
+  useEffect(() => {
+    console.log("rerender");
+  }, [User]);
 
   useEffect(() => {
     axios
@@ -20,7 +26,7 @@ export default function Projects() {
       .catch((err) => {
         console.log("Error" + err);
       });
-  }, [User]);
+  }, []);
 
   const handleJoin = async (project) => {
     await axios
@@ -34,8 +40,7 @@ export default function Projects() {
       })
       .then((res) => {
         console.log(res);
-        // const token = res.data.token;
-        // localStorage.setItem("token", token);
+        setUser(res.data._doc);
       })
       .catch((err) => {
         console.log("Error" + err);
@@ -46,7 +51,7 @@ export default function Projects() {
     <>
       {Projects.length !== 0
         ? Projects.map((project, index) => {
-            if (project.status === "Listed")
+            if (project.status === "Listed" || project.status === "Working")
               return (
                 <div
                   className="card w-full h-[24%] bg-transparent shadow-xl shrink-0 border "
@@ -62,6 +67,9 @@ export default function Projects() {
                       </p>
                       <p className="card-title text-white ml-4 text-lg font-extralight ">
                         Technologies Reqired: {project.technologies}
+                      </p>
+                      <p className="card-title text-white ml-4 text-lg font-extralight ">
+                        Status: {project.status}
                       </p>
                     </div>
                     <div className="self-end w-[25%] flex justify-end ">
