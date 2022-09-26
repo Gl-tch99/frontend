@@ -35,9 +35,13 @@ export default function Friendslist() {
                       </p>
                     </div>
                   </div>
-                  <div className="flex-row flex justify-end items-center gap-2 w-[42%] h-full">
-                    <label className="btn modal-button btn-md btn-outline btn-success mr-6">
-                      <ImProfile size="28" />
+                  <div className="flex-row flex justify-end items-center gap-2 w-[42%] h-full mr-4">
+                    <label
+                      htmlFor="my-modal-4"
+                      className="btn modal-button"
+                      value={friend}
+                    >
+                      <ImProfile size={20} />
                     </label>
 
                     <input
@@ -45,12 +49,24 @@ export default function Friendslist() {
                       id="my-modal-4"
                       className="modal-toggle"
                     />
-                    <label className="modal cursor-pointer">
-                      <label className="modal-box relative">
-                        <h3 className="text-lg font-bold"></h3>
+                    <label
+                      htmlFor="my-modal-4"
+                      className="modal cursor-pointer"
+                    >
+                      <label className="modal-box relative" for="">
+                        <h3 className="text-lg font-bold">Friend Profile</h3>
+                        <p className="py-4">First name: {friend.firstname}</p>
+                        <p className="py-4">Last name: {friend.lastname}</p>
+                        <p className="py-4">Email: {friend.email}</p>
                         <p className="py-4">
-                          You've been selected for a chance to get one year of
-                          subscription to use Wikipedia for free!
+                          Skillset:{" "}
+                          {friend.skillsets.map((skill, index) => {
+                            return index <= friend.skillsets.length ? (
+                              <span>{skill},</span>
+                            ) : (
+                              <span>{skill}</span>
+                            );
+                          })}
                         </p>
                       </label>
                     </label>

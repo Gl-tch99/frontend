@@ -15,39 +15,51 @@ export default function Friendreq() {
     const user = User;
     console.log("frnds:" + user);
     console.log(user);
-    const frnds = user.friends;
-    frnds.push({
-      lastname: friend.lastname,
-      firstname: friend.firstname,
-      skillsets: friend.skillsets,
-      email: friend.email,
-      userid: friend.userid,
-    });
-    console.log(frnds);
-    const frndsreq = user.friendsreq.filter((ele) => {
-      return ele !== friend;
-    });
+    // const frnds = user.friends;
+
+    // const frndsreq = user.friendsreq.filter((ele) => {
+    //   return ele !== friend;
+    // });
 
     await axios
-      .patch(`http://localhost:3000/users/acceptreq`, {
+      .put("http://localhost:3000/users/acceptreq", {
         headers: {
           authorization: "Bearer " + localStorage.token,
         },
         data: {
           user,
-          frnds,
-          frndsreq,
+          friend,
         },
       })
       .then((response) => {
         console.log(response.data);
         const token = response.data.token;
         localStorage.setItem("token", token);
-        setValue(user);
-        setUser(user);
+        // setValue(user);
+        // setUser(user);
         // const users = response.data;
         // setUser(users);
         // console.log(users);
+      })
+      .catch((error) => console.log(error));
+  };
+
+  const handleRejectReq = async (friend) => {
+    await axios
+      .put("http://localhost:3000/users/rejectreq", {
+        headers: {
+          authorization: "Bearer " + localStorage.token,
+        },
+        data: {
+          friend,
+        },
+      })
+      .then((res) => {
+        console.log(res.data);
+        const token = res.data.token;
+        localStorage.setItem("token", token);
+        // setValue(user);
+        // setUser(user);
       })
       .catch((error) => console.log(error));
   };
@@ -95,7 +107,7 @@ export default function Friendreq() {
                     <button
                       className="btn btn-ghost z-10"
                       onClick={() => {
-                        console.log("button 2");
+                        handleRejectReq(friend);
                       }}
                     >
                       <IoIosCloseCircleOutline size="30" />

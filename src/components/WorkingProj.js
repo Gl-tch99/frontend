@@ -7,11 +7,11 @@ export default function WorkingProj() {
   const [WorkingProj, setWorkingProj] = useState([]);
 
   useEffect(() => {
-    console.log("rerender");
+    console.log(User.projects.length);
   }, [User]);
 
-  const handleChangeStatus = () => {
-    console.log("asd");
+  const handleChangeStatus = (value, project) => {
+    console.log(value);
   };
 
   return (
@@ -59,8 +59,8 @@ export default function WorkingProj() {
                       {project.status !== "Working" ? (
                         <li>
                           <button
-                            onClick={() => {
-                              handleChangeStatus();
+                            onClick={(event) => {
+                              handleChangeStatus(event.target.value, project);
                             }}
                             value="Working"
                           >
@@ -73,8 +73,8 @@ export default function WorkingProj() {
                       {project.status !== "Completed" ? (
                         <li>
                           <button
-                            onClick={() => {
-                              handleChangeStatus();
+                            onClick={(event) => {
+                              handleChangeStatus(event.target.value, project);
                             }}
                             value="Completed"
                           >
@@ -87,8 +87,8 @@ export default function WorkingProj() {
                       {project.status !== "Listed" ? (
                         <li>
                           <button
-                            onClick={() => {
-                              handleChangeStatus();
+                            onClick={(event) => {
+                              handleChangeStatus(event.target.value, project);
                             }}
                             value="Listed"
                           >
@@ -103,7 +103,7 @@ export default function WorkingProj() {
                 </div>
               </div>
             );
-          }
+          } else return <div></div>;
         })}
     </>
   );

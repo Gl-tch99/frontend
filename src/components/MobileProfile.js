@@ -18,17 +18,28 @@ export default function MobileProfile() {
         className="flex flex-col flex-wrap justify-evenly mt-4
          items-center rounded-3xl h-[85%] w-[90%] top-2 lg:h-5/6 lg:w-5/6 bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-30 border lg:flex-row overflow-scroll md:overflow-auto gap-2 "
       >
-        <div className="self-end h-[8%]">
-          <button
-            className="btn btn-outline btn-success rounded-full mr-2 mt-2"
-            onClick={() => {
-              handleLogout();
-            }}
-          >
-            Logout
-          </button>
+        <div className="flex w-full justify-between items-center">
+          <div className="">
+            <button
+              className="btn btn-outline btn-success rounded-full mr-2 mt-2 ml-2 w-24"
+              onClick={() => {
+                navigate("/edituser");
+              }}
+            >
+              Edit
+            </button>
+          </div>
+          <div className="">
+            <button
+              className="btn btn-outline btn-success rounded-full mr-2 mt-2"
+              onClick={() => {
+                handleLogout();
+              }}
+            >
+              Logout
+            </button>
+          </div>
         </div>
-
         <div>
           <img
             className="mask mask-hexagon outline-offset-2 outline-success"

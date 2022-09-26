@@ -18,7 +18,7 @@ export default function Profile() {
       <div className="flex w-full justify-between items-center">
         <div className="">
           <button
-            className="btn btn-outline btn-success rounded-full mr-2 mt-2"
+            className="btn btn-outline btn-success rounded-full mr-2 mt-2 ml-2 w-24"
             onClick={() => {
               navigate("/edituser");
             }}
@@ -95,7 +95,7 @@ export default function Profile() {
         <div className="self-end text-end pr-8 text-white mt-1 text-2xl font-extralight capitalize ml-4">
           Experience:
         </div>
-        <div className="flex gap-2 w-full flex-wrap mt-2 items-center justify-end">
+        <div className="flex gap-2 w-full flex-wrap mt-2 items-center justify-end mb-4">
           <div className="mr-6 ">
             {User.experience.map((exp, index) => {
               return (
