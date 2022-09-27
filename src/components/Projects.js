@@ -3,7 +3,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { UserContext } from "../App";
 import useLocalStorage from "./useLocalStorage";
 
-export default function Projects() {
+export default function Projects({ handleRerender }) {
   const { LoggedIn, setLoggedIn, User, setUser } = useContext(UserContext);
   const [Projects, setProjects] = useState([]);
   const [Local, setLocal] = useLocalStorage("User");
@@ -77,6 +77,7 @@ export default function Projects() {
                         className="btn btn-outline btn-success rounded-full w-36 mt-4 text-xl font-extralight self-end mb-4 mr-2"
                         onClick={() => {
                           handleJoin(project);
+                          handleRerender();
                         }}
                       >
                         Join

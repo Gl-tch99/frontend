@@ -20,12 +20,18 @@ export default function Home() {
   const [Local, setLocal] = useLocalStorage("User");
   const [Search, setSearch] = useState("");
   const [SearchResult, setSearchResult] = useState([]);
+  const [ReRender, setReRender] = useState(false);
+
+  const handleRerender = () => {
+    console.log("handle rerender ran.");
+    setReRender(!ReRender);
+  };
 
   useEffect(() => {
     console.log("refreshed");
     let result = verifytoken();
     console.log(result);
-  }, [User]);
+  }, [ReRender]);
 
   const handleSearch = async () => {
     await axios
@@ -57,6 +63,7 @@ export default function Home() {
         console.log(res);
         const users = res.data;
         setLoggedIn(true);
+        setUser(users);
         setLocal(users);
         return true;
       })
@@ -126,10 +133,15 @@ export default function Home() {
                 {FriendDiv === "Friendslist" ? (
                   <Friendslist />
                 ) : FriendDiv === "Friendreq" ? (
-                  <Friendreq />
-                ) : (
+                  <Friendreq handleRerender={handleRerender} />
+                ) : FriendDiv === "Friendadd" ? (
                   <Friendadd />
+                ) : FriendDiv === "Chat" ? (
+                  <div>asd</div>
+                ) : (
+                  <div>asdas</div>
                 )}
+
                 {/* ------------------------------------------------------------------------ */}
               </div>
             </div>
@@ -195,20 +207,8 @@ export default function Home() {
           </div>
           <div className="border w-full h-[77%] rounded-3xl flex flex-col justify-start items-center">
             {/* --------------------------------------------------------------------------------------------------------------------- */}
-
-            {/* <div className="w-[98%] h-[98%] rounded-3xl flex flex-col shrink-0 justify-start gap-2 items-center mt-2 pt-2 py-2 overflow-scroll scrollbar-hide">
-              <div className="card w-full bg-transparent shadow-xl shrink-0 border">
-                <div className="card-body">
-                  <h2 className="card-title"></h2>
-                  <p>If a dog chews shoes whose shoes does he choose?</p>
-                  <div className="card-actions justify-end">
-                    <button className="btn btn-primary">Buy Now</button>
-                  </div>
-                </div>
-              </div>
-            </div> */}
             <div className="w-[96%] h-[98%] rounded-3xl flex flex-col shrink-0 justify-start gap-2 items-center mt-2 pt-2 py-2 overflow-scroll scrollbar-hide">
-              <Projects />
+              <Projects handleRerender={handleRerender} />
             </div>
             {/* --------------------------------------------------------------------------------------------------------------------- */}
           </div>
@@ -218,16 +218,6 @@ export default function Home() {
           id="right"
           className=" flex flex-col justify-start items-center rounded-3xl w-[25%] h-[93%] border overflow-scroll md:overflow-auto scrollbar-hide gap-4"
         >
-          {/* <div>
-            <button
-              className="bg-green-900 rounded-full mt-4 text-white font-extralight text-2xl py-2 px-5 pb-3 self-end"
-              onClick={() => {
-                handleLogout();
-              }}
-            >
-              Logout
-            </button>
-          </div> */}
           <Profile />
         </div>
       </div>

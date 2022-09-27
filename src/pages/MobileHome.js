@@ -1,8 +1,11 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import Tilt from "react-parallax-tilt";
+import { useNavigate } from "react-router";
 
 export default function MobileHome() {
   const [Projects, setProjects] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     axios
@@ -25,8 +28,28 @@ export default function MobileHome() {
       <div className="flex justify-center items-start h-screen w-screen scrollbar-hide lg:items-center overflow-x-clip">
         <div
           className="flex flex-wrap justify-evenly mt-4
-         items-center rounded-3xl h-[85%] w-[90%] top-2 lg:h-5/6 lg:w-5/6 bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-30 border lg:flex-row overflow-scroll md:overflow-auto gap-2 "
+         items-center rounded-3xl h-[85%] w-[90%] top-2 lg:h-5/6 lg:w-5/6 bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-30 border lg:flex-row overflow-scroll md:overflow-auto gap-2 scrollbar-hide"
         >
+          <Tilt
+            glareEnable={true}
+            glareMaxOpacity={1}
+            className="h-[30%] w-full flex flex-col justify-center border rounded-box items-center m-2"
+          >
+            <div className="text-white text-2xl  font-extralight flex flex-col ">
+              <div className="text-center text-xl">Add Project.</div>
+              <div className="text-white text-lg font-extralight">
+                Create or Join a Project.
+              </div>
+              <button
+                className="btn btn-outline btn-success btn-sm rounded-full  mt-4"
+                onClick={() => {
+                  navigate("/addproj");
+                }}
+              >
+                Add Project
+              </button>
+            </div>
+          </Tilt>
           {Projects.length !== 0
             ? Projects.map((project, index) => {
                 if (project.status === "Listed")

@@ -67,7 +67,7 @@ export default function () {
           }}
         ></input>
         <button
-          className="py-2 border rounded-3xl pt-3 lg:pt-4  md:pt-6 w-40 md:w-52 lg:w-40 bg-green-900 flex justify-center"
+          className=" border rounded-3xl  lg:pt-4  md:pt-6 w-40 md:w-52 lg:w-40 bg-green-900 flex justify-center"
           onClick={() => {
             handleSearch();
           }}

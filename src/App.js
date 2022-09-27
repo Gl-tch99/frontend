@@ -40,9 +40,9 @@ function App() {
 
   const verifytoken = async () => {
     await axios
-      .get("/users/verifytoken", {
+      .get("http://localhost:3000/users/verifytoken", {
         headers: {
-          authorization: " Bearer " + localStorage.token,
+          authorization: "Bearer " + localStorage.token,
         },
       })
       .then((res) => {
@@ -64,6 +64,10 @@ function App() {
     if (width < 1024) setLargeScreen(false);
     if (localStorage.token != null) {
       console.log("token found");
+      // const result = async () => {
+      //   const data = await verifytoken();
+      //   console.log(data);
+      // };
       let result = verifytoken();
       console.log(result);
     } else {

@@ -9,7 +9,7 @@ import Typed from "react-typed";
 function Login() {
   const navigate = useNavigate();
   const { LoggedIn, setLoggedIn, User, setUser } = useContext(UserContext);
-
+  const [RememberMe, setRememberMe] = useState(false);
   const [LoginUser, setLoginUser] = useState({
     email: "",
     password: "",
@@ -58,7 +58,7 @@ function Login() {
     // console.log(event.target);
     setLoginUser((LoginUser) => ({
       ...LoginUser,
-      rememberMe: !LoginUser.rememberMe,
+      rememberMe: RememberMe,
     }));
   };
 
@@ -146,11 +146,14 @@ function Login() {
                 <div>
                   <input
                     type="checkbox"
-                    onClick={handleRememberMe}
+                    onClick={() => {
+                      setRememberMe(!RememberMe);
+                      handleRememberMe();
+                    }}
                     checked={LoginUser.rememberMe ? "checked" : ""}
                     className="checkbox checkbox-primary"
                     onChange={() => {
-                      console.log(LoginUser.admin);
+                      console.log(LoginUser.rememberMe);
                     }}
                   ></input>
                   <label className="text-white font-extralight text-2xl pl-2 pb-4 self-start">
