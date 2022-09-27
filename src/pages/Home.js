@@ -18,12 +18,33 @@ export default function Home() {
   const { LoggedIn, setLoggedIn, User, setUser } = useContext(UserContext);
   const [FriendDiv, setFriendDiv] = useState("Friendslist");
   const [Local, setLocal] = useLocalStorage("User");
+  const [Search, setSearch] = useState("");
+  const [SearchResult, setSearchResult] = useState([]);
 
   useEffect(() => {
     console.log("refreshed");
     let result = verifytoken();
     console.log(result);
   }, [User]);
+
+  const handleSearch = async () => {
+    await axios
+      .post("http://localhost:3000/projects/search", {
+        headers: {
+          authorization: "Bearer " + localStorage.token,
+        },
+        data: {
+          Search,
+        },
+      })
+      .then((response) => {
+        console.log(response.data);
+        const users = response.data;
+        console.log(users);
+        setSearchResult(users);
+      })
+      .catch((error) => console.log(error));
+  };
 
   const verifytoken = async () => {
     await axios
@@ -58,7 +79,7 @@ export default function Home() {
             id="left-1"
             className="flex flex-col justify-evenly items-center rounded-3xl w-full h-[60%] border overflow-scroll md:overflow-auto scrollbar-hide gap-8"
           >
-            <div className=" w-full flex justify-evenly items-center overflow-visible">
+            <div className=" w-full flex justify-evenly items-center overflow-visible ">
               {/* <input
                 type="text"
                 className=" flex justify-start items-center h-[10%] w-[93%] border rounded-3xl mt-2"
@@ -66,7 +87,7 @@ export default function Home() {
                 placeholder="Search for Friends?"
               ></input> */}
 
-              <div className="tabs w-full justify-center ">
+              <div className="tabs w-full justify-center mt-4 ">
                 <button
                   className={`tab tab-md tab-lifted text-lg h-14 w-1/3 ${
                     FriendDiv === "Friendslist" ? "tab-active" : ""
@@ -157,8 +178,17 @@ export default function Home() {
               <input
                 className="bg-transparent border w-[80%] rounded-full text-white text-2xl font-extralight pb-1 pl-4"
                 placeholder="Search Project"
+                onChange={(event) => {
+                  setSearch(event.target.value);
+                }}
+                value={Search}
               ></input>
-              <button className="btn btn-outline btn-success btn-sm rounded-full w-36 mt-4">
+              <button
+                className="btn btn-outline btn-success btn-sm rounded-full w-36 mt-4"
+                onClick={() => {
+                  handleSearch();
+                }}
+              >
                 Search
               </button>
             </Tilt>

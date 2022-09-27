@@ -1,24 +1,28 @@
 import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
+import { Navigate, useNavigate } from "react-router";
 import { UserContext } from "../App";
 
 export default function WorkingProj() {
   const { LoggedIn, setLoggedIn, User, setUser } = useContext(UserContext);
   const [WorkingProj, setWorkingProj] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     console.log(User.projects.length);
   }, [User]);
 
   const handleChangeStatus = (value, project) => {
-    console.log(value);
+    if (value === "Completed") {
+      navigate("");
+    }
   };
 
   return (
     <>
       {User.projects !== 0 &&
         User.projects.map((project, index) => {
-          if (project.status === "Working") {
+          if (project.status === "Working" || project.status === "Listed") {
             return (
               <div
                 className="flex w-[93%] bg-transparent border text-neutral-content h-[20%] felx justify-evenly items-center cursor-pointer rounded-2xl py-3"

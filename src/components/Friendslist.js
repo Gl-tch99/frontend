@@ -53,7 +53,7 @@ export default function Friendslist() {
                       htmlFor="my-modal-4"
                       className="modal cursor-pointer"
                     >
-                      <label className="modal-box relative" for="">
+                      <label className="modal-box relative">
                         <h3 className="text-lg font-bold">Friend Profile</h3>
                         <p className="py-4">First name: {friend.firstname}</p>
                         <p className="py-4">Last name: {friend.lastname}</p>
@@ -61,10 +61,10 @@ export default function Friendslist() {
                         <p className="py-4">
                           Skillset:{" "}
                           {friend.skillsets.map((skill, index) => {
-                            return index <= friend.skillsets.length ? (
-                              <span>{skill},</span>
+                            return index === friend.skillsets.length - 1 ? (
+                              <span key={index}>{skill}</span>
                             ) : (
-                              <span>{skill}</span>
+                              <span key={index}>{skill},</span>
                             );
                           })}
                         </p>
