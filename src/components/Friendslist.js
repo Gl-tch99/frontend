@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { UserContext } from "../App";
 import {
   IoIosCheckmarkCircleOutline,
@@ -7,9 +7,30 @@ import {
 import { ImProfile } from "react-icons/im";
 import Tilt from "react-parallax-tilt";
 import uuid from "react-uuid";
-
+import emailjs from "@emailjs/browser";
 export default function Friendslist() {
   const { LoggedIn, setLoggedIn, User, setUser } = useContext(UserContext);
+
+  const handleSendEmail = async (event, friend) => {
+    const templateparams = {
+      // to_email: event.target.form.email.value,
+      to_email: "varshil.17beecg023@gmail.com",
+      to_name: event.target.form.firstname.value,
+      from_email: User.email,
+      // from_name: User.firstname,
+      from_name: "varshil17beecg023@gmail.com",
+      message: event.target.form.message.value,
+    };
+
+    emailjs.send(
+      "service_6pkahbc",
+      "template_o6ve4qe",
+      templateparams,
+      "LClGq2_ZXA4r4pyoM"
+    );
+    console.log(templateparams);
+  };
+
   return (
     <>
       {User.friends !== 0
@@ -69,26 +90,49 @@ export default function Friendslist() {
                 />
                 <label htmlFor="my-modal-4" className="modal cursor-pointer">
                   <label className="modal-box relative">
-                    <h3 className="text-lg font-bold capitalize">
-                      {friend.firstname}'s Profile
-                    </h3>
-                    <div>
-                      <p className="py-4">First name: {friend.firstname}</p>
-                    </div>
-                    <div>
-                      <p className="py-4">Last name: {friend.lastname}</p>
-                    </div>
-                    <div>
-                      <p className="py-4">Email: {friend.email}</p>
-                    </div>
-                    <div className="capitalize py-4">
-                      Contact {friend.firstname}
-                    </div>
-                    <form>
-                      <div className="flex flex-col w-full ">
+                    <form onSubmit={handleSendEmail}>
+                      <h3 className="text-lg font-bold capitalize">
+                        {friend.firstname}'s Profile
+                      </h3>
+                      <div>
+                        <input
+                          className="py-4 bg-transparent"
+                          disabled="disabled"
+                          value={friend.firstname}
+                          name="firstname"
+                        >
+                          {/* First name: {friend.firstname} */}
+                        </input>
+                      </div>
+                      <div>
+                        <input
+                          className="py-4 bg-transparent"
+                          disabled="disabled"
+                          value={friend.lastname}
+                          name="lastname"
+                        >
+                          {/* Last name: {friend.lastname} */}
+                        </input>
+                      </div>
+                      <div>
+                        <input
+                          type="text"
+                          disabled="disabled"
+                          className="py-2 bg-transparent"
+                          value={friend.email}
+                          name="email"
+                        >
+                          {/* Email: {friend.email} */}
+                        </input>
+                      </div>
+                      <div className="capitalize py-4">
+                        Contact {friend.firstname}
+                      </div>
+                      <div className="flex flex-col w-full">
                         <div>Message:</div>
                         <div>
                           <textarea
+                            name="message"
                             rows={4}
                             className="w-3/4 text-lg text-white bg-transparent border rounded-2xl overflow-hidden font-extralight pl-2 pt-2 mt-2 mb-2"
                           ></textarea>
@@ -96,6 +140,10 @@ export default function Friendslist() {
                         <button
                           type="submit"
                           className="py-4 btn btn-outline btn-success w-1/4 pl-4"
+                          onClick={(event) => {
+                            event.preventDefault();
+                            handleSendEmail(event);
+                          }}
                         >
                           Send Email
                         </button>
