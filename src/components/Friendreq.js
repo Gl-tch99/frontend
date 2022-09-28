@@ -6,6 +6,7 @@ import {
 } from "react-icons/io";
 import axios from "axios";
 import useLocalStorage from "./useLocalStorage";
+import Tilt from "react-parallax-tilt";
 
 export default function Friendreq({ handleRerender }) {
   const { LoggedIn, setLoggedIn, User, setUser } = useContext(UserContext);
@@ -76,7 +77,12 @@ export default function Friendreq({ handleRerender }) {
       {User.friendsreq !== 0
         ? User.friendsreq.map((friend, index) => {
             return (
-              <div
+              <Tilt
+                glareEnable={true}
+                glareMaxOpacity={1}
+                perspective={2500}
+                tiltMaxAngleY={15}
+                tiltMaxAngleX={15}
                 className=" w-[93%] bg-transparent border text-neutral-content h-[20%] flex justify-center items-center cursor-pointer rounded-2xl"
                 key={index}
               >
@@ -116,7 +122,7 @@ export default function Friendreq({ handleRerender }) {
                     </button>
                   </div>
                 </div>
-              </div>
+              </Tilt>
             );
           })
         : ""}

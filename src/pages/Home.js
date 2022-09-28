@@ -127,7 +127,7 @@ export default function Home() {
                 </button>
               </div>
             </div>
-            <div className="h-[85%] w-[98%] rounded-3xl justify-self-end ">
+            <div className="h-[85%] w-[98%] rounded-3xl justify-self-end">
               <div className="flex flex-col items-center h-full mt-4 gap-3">
                 {/* ------------------------------------------------------------------------ */}
                 {FriendDiv === "Friendslist" ? (
@@ -163,7 +163,7 @@ export default function Home() {
             <Tilt
               glareEnable={true}
               glareMaxOpacity={1}
-              className="h-full w-[47%] flex flex-col justify-center border rounded-box items-center m-2"
+              className="h-full w-[47%] flex flex-col justify-center border rounded-box items-center m-2 overflow-hidden"
             >
               <div className="text-white text-2xl  font-extralight flex flex-col ">
                 <div className="text-center text-xl">Add Project.</div>
@@ -185,7 +185,7 @@ export default function Home() {
             <Tilt
               glareEnable={true}
               glareMaxOpacity={1}
-              className="h-full w-[47%] flex flex-col justify-center border rounded-box items-center bg-transparent m-2"
+              className="h-full w-[47%] flex flex-col justify-center border rounded-box items-center bg-transparent m-2 overflow-hidden"
             >
               <input
                 className="bg-transparent border w-[80%] rounded-full text-white text-2xl font-extralight pb-1 pl-4"

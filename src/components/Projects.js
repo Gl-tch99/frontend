@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
 import { UserContext } from "../App";
 import useLocalStorage from "./useLocalStorage";
+import Tilt from "react-parallax-tilt";
 
 export default function Projects({ handleRerender }) {
   const { LoggedIn, setLoggedIn, User, setUser } = useContext(UserContext);
@@ -53,7 +54,13 @@ export default function Projects({ handleRerender }) {
         ? Projects.map((project, index) => {
             if (project.status === "Listed" || project.status === "Working")
               return (
-                <div
+                <Tilt
+                  glareEnable={true}
+                  glareMaxOpacity={1}
+                  scale={0.95}
+                  perspective={3000}
+                  tiltMaxAngleY={8}
+                  tiltMaxAngleX={8}
                   className="card w-full h-[24%] bg-transparent shadow-xl shrink-0 border "
                   key={index}
                 >
@@ -84,7 +91,7 @@ export default function Projects({ handleRerender }) {
                       </button>
                     </div>
                   </div>
-                </div>
+                </Tilt>
               );
           })
         : ""}

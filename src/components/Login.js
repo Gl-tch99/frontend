@@ -72,16 +72,18 @@ function Login() {
 
   const asf = "#00df9a";
   return (
-    <div className="flex justify-center items-start h-screen w-screen overflow-hidden lg:items-center">
-      <div
+    <div className="flex justify-center items-start h-screen w-screen overflow-hidden lg:items-center ">
+      <Tilt
+        scale={1.02}
+        perspective={3000}
+        glareEnable={true}
+        glareMaxOpacity={0.2}
+        tiltMaxAngleY={8}
+        tiltMaxAngleX={8}
         className="flex flex-col flex-wrap justify-evenly mt-20
          items-center rounded-3xl h-[78%] w-5/6 top-2 lg:h-5/6 lg:w-5/6 bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-30 border lg:flex-row overflow-hidden md:overflow-auto scrollbar-hide"
       >
-        <Tilt
-          scale={1.1}
-          glareEnable={false}
-          className="w-full mt-6 h-1/5 lg:h-full lg:w-2/6 flex justify-center lg:flex-col lg:justify-center items-center gap-4 "
-        >
+        <div className="w-full mt-6 h-1/5 lg:h-full lg:w-2/6 flex justify-center lg:flex-col lg:justify-center items-center gap-4 overflow-hidden">
           <svg
             width="120"
             height="150"
@@ -113,7 +115,7 @@ function Login() {
               />
             </div>
           </div>
-        </Tilt>
+        </div>
         <div className="font-normal text-4xl flex flex-col items-center overflow-hidden w-full h-3/4 lg:justify-center lg:items-center lg:flex-row lg:w-3/6 lg:h-full ">
           <div className="h-4/5 w-4/5 mt-4 flex flex-col justify-center">
             <form>
@@ -199,7 +201,7 @@ function Login() {
             </form>
           </div>
         </div>
-      </div>
+      </Tilt>
     </div>
   );
 }
