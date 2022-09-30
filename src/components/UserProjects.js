@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import CompletedProj from "./CompletedProj";
 import WorkingProj from "./WorkingProj";
 
-export default function UserProjects() {
+export default function UserProjects({ handleRerender }) {
   const [ProjectDiv, setProjectDiv] = useState("Working");
   return (
     <div>
@@ -33,7 +33,11 @@ export default function UserProjects() {
       <div className="h-[85%] w-[98%] rounded-3xl overflow-scroll scrollbar-hide justify-self-end ">
         <div className="flex flex-col items-center h-full mt-4 gap-3 overflow-scroll scrollbar-hide">
           {/* ------------------------------------------------------------------------ */}
-          {ProjectDiv === "Working" ? <WorkingProj /> : <CompletedProj />}
+          {ProjectDiv === "Working" ? (
+            <WorkingProj handleRerender={handleRerender} />
+          ) : (
+            <CompletedProj />
+          )}
           {/* ------------------------------------------------------------------------ */}
         </div>
       </div>

@@ -161,7 +161,7 @@ export default function Home() {
             id="left-2"
             className="rounded-3xl w-full h-[38%] border overflow-scroll scrollbar-hide"
           >
-            <UserProjects />
+            <UserProjects handleRerender={handleRerender} />
           </div>
         </div>
         <div

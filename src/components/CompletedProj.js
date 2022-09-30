@@ -18,10 +18,10 @@ export default function CompletedProj() {
                     {project.name}
                   </div>
                   <div className="text-white font-extralight text-md">
-                    Description: {project.description}
+                    Status: {project.status}
                   </div>
                 </div>
-                <div>
+                {/* <div>
                   <select className="select select-accent w-[93%] ">
                     <option disabled selected>
                       Change status
@@ -37,7 +37,7 @@ export default function CompletedProj() {
                       ""
                     )}
                   </select>
-                </div>
+                </div> */}
               </div>
             );
           }

@@ -4,7 +4,7 @@ import { Navigate, useNavigate } from "react-router";
 import { UserContext } from "../App";
 import Tilt from "react-parallax-tilt";
 
-export default function WorkingProj() {
+export default function WorkingProj({ handleRerender }) {
   const { LoggedIn, setLoggedIn, User, setUser } = useContext(UserContext);
   const [WorkingProj, setWorkingProj] = useState([]);
   const navigate = useNavigate();
@@ -14,30 +14,34 @@ export default function WorkingProj() {
   }, [User]);
 
   const handleChangeStatus = async (value, project) => {
-    // if (value === "Completed") {
-    //   await axios.put("http://localhost:3000/projects/changestatus", {
-    //     headers: {
-    //       authorization: "Bearer " + localStorage.token,
-    //     },
-    //     data: {
-    //       project,
-    //       value,
-    //     },
-    //   }).then((res) => {
-    //     console.log
-    //   })
-    //   // navigate("");
-    // } else {
-    //   await axios.put("http://localhost:3000/projects/changestatus", {
-    //     headers: {
-    //       authorization: "Bearer " + localStorage.token,
-    //     },
-    //     data: {
-    //       project,
-    //       value,
-    //     },
-    //   });
-    // }
+    if (value === "Completed") {
+      await axios
+        .put("http://localhost:3000/users/changeprojstatus", {
+          headers: {
+            authorization: "Bearer " + localStorage.token,
+          },
+          data: {
+            project,
+            value,
+          },
+        })
+        .then((res) => {
+          console.log("done");
+          navigate("");
+        });
+      handleRerender();
+    } else {
+      await axios.put("http://localhost:3000/users/changeprojstatus", {
+        headers: {
+          authorization: "Bearer " + localStorage.token,
+        },
+        data: {
+          project,
+          value,
+        },
+      });
+      handleRerender();
+    }
   };
 
   return (
