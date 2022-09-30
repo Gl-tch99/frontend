@@ -66,12 +66,12 @@ export default function MobileHome() {
                           <p className="card-title text-white ml-4 text-lg font-extralight ">
                             Description: {project.description}
                           </p>
-                          <p className="card-title text-white ml-4 text-lg font-extralight ">
+                          <div className="card-title text-white ml-4 text-lg font-extralight ">
                             Tech Reqired:{" "}
                             {project.technologies.map((tech, index) => {
-                              return <p>{tech}</p>;
+                              return <p key={index}>{tech}</p>;
                             })}
-                          </p>
+                          </div>
                         </div>
                         <div className="self-end w-[25%] flex justify-end ">
                           <button className="btn btn-outline btn-success rounded-full w-36 mt-4 text-xl font-extralight self-end mb-4 mr-2">

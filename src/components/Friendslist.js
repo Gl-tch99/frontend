@@ -8,17 +8,18 @@ import { ImProfile } from "react-icons/im";
 import Tilt from "react-parallax-tilt";
 import uuid from "react-uuid";
 import emailjs from "@emailjs/browser";
-export default function Friendslist() {
+import Chat from "./Chat";
+export default function Friendslist({ setChatProp }) {
   const { LoggedIn, setLoggedIn, User, setUser } = useContext(UserContext);
 
   const handleSendEmail = async (event, friend) => {
     const templateparams = {
-      // to_email: event.target.form.email.value,
-      to_email: "varshil.17beecg023@gmail.com",
+      to_email: event.target.form.email.value,
+      // to_email: "varshil.17beecg023@gmail.com",
       to_name: event.target.form.firstname.value,
       from_email: User.email,
-      // from_name: User.firstname,
-      from_name: "varshil17beecg023@gmail.com",
+      from_name: User.firstname,
+      // from_name: "varshil17beecg023@gmail.com",
       message: event.target.form.message.value,
     };
 
@@ -46,10 +47,13 @@ export default function Friendslist() {
                   className=" w-[93%] bg-transparent border text-neutral-content h-[20%] felx justify-center items-center cursor-pointer rounded-2xl min-h-[20%] overflow-hidden"
                 >
                   <div className=" flex flex-row w-full h-full mb-4">
-                    <div
-                      className="w-[58%] h-full flex flex-col justify-center"
+                    <label
+                      htmlFor="my-modal-3"
+                      className="modal-button w-[58%] h-full flex flex-col justify-center"
+                      // className="w-[58%] h-full flex flex-col justify-center"
                       onClick={() => {
                         console.log(friend);
+                        // setChatProp(false);
                       }}
                     >
                       <div>
@@ -62,7 +66,8 @@ export default function Friendslist() {
                           {friend.email}
                         </p>
                       </div>
-                    </div>
+                    </label>
+
                     <div className="flex-row flex justify-end items-center gap-2 w-[42%] h-full mr-4">
                       <label
                         htmlFor="my-modal-4"
@@ -83,6 +88,41 @@ export default function Friendslist() {
                     </div>
                   </div>
                 </Tilt>
+                {/* ------------------------------------------------------------------------------------- */}
+                <input
+                  type="checkbox"
+                  id="my-modal-3"
+                  className="modal-toggle"
+                />
+                <div className="modal">
+                  <div className="modal-box relative">
+                    <label
+                      htmlFor="my-modal-3"
+                      className="btn btn-sm btn-circle absolute right-2 top-2"
+                    >
+                      ✕
+                    </label>
+                    {/* <div className="flex flex-col h-96 w-full rounded-2xl gap-2">
+                      <div className="min-h-[90%] w-full border rounded-2xl overflow-scroll scrollbar-hide">
+                        <div>asdadafsd</div>
+                        <div>asdadafsd</div>
+                        <div>asdadafsd</div>
+                        <div>asdadafsd</div>
+                        <div>asdadafsd</div>
+                        <div>asdadafsd</div>
+                        <div>asdadafsd</div>
+                      </div>
+                      <div className="w-full border rounded-2xl flex ">
+                        <input className="w-3/4 border rounded-2xl m-2" />
+                        <button className="border btn btn-outline btn-success rounded-full w-40 h-10">
+                          Send
+                        </button>
+                      </div>
+                    </div> */}
+                    <Chat CurrFriend={friend} />
+                  </div>
+                </div>
+                {/* ------------------------------------------------------------------------------------- */}
                 <input
                   type="checkbox"
                   id="my-modal-4"

@@ -21,6 +21,7 @@ export default function Home() {
   const [Search, setSearch] = useState("");
   const [SearchResult, setSearchResult] = useState([]);
   const [ReRender, setReRender] = useState(false);
+  const [Chat, setChat] = useState(true);
 
   const handleRerender = () => {
     console.log("handle rerender ran.");
@@ -72,6 +73,10 @@ export default function Home() {
         return false;
       });
   };
+
+  const setChatProp = () => {
+    setChat(false);
+  };
   return (
     <div className="flex justify-center items-center h-screen w-screen ">
       <div
@@ -86,14 +91,9 @@ export default function Home() {
             id="left-1"
             className="flex flex-col justify-evenly items-center rounded-3xl w-full h-[60%] border overflow-scroll md:overflow-auto scrollbar-hide gap-8"
           >
+            {/* {Chat ? (
+              <> */}
             <div className=" w-full flex justify-evenly items-center overflow-visible ">
-              {/* <input
-                type="text"
-                className=" flex justify-start items-center h-[10%] w-[93%] border rounded-3xl mt-2"
-                className="bg-transparent text-2xl font-extralight ml-4 focus:outline-none w-full pb-1"
-                placeholder="Search for Friends?"
-              ></input> */}
-
               <div className="tabs w-full justify-center mt-4 ">
                 <button
                   className={`tab tab-md tab-lifted text-lg h-14 w-1/3 ${
@@ -131,7 +131,7 @@ export default function Home() {
               <div className="flex flex-col items-center h-full mt-4 gap-3">
                 {/* ------------------------------------------------------------------------ */}
                 {FriendDiv === "Friendslist" ? (
-                  <Friendslist />
+                  <Friendslist setChatProp={setChatProp} />
                 ) : FriendDiv === "Friendreq" ? (
                   <Friendreq handleRerender={handleRerender} />
                 ) : FriendDiv === "Friendadd" ? (
@@ -145,6 +145,17 @@ export default function Home() {
                 {/* ------------------------------------------------------------------------ */}
               </div>
             </div>
+            {/* </>
+            ) : (
+              <div
+                className="text-white"
+                onClick={() => {
+                  setChat(true);
+                }}
+              >
+                switch
+              </div>
+            )} */}
           </div>
           <div
             id="left-2"

@@ -41,7 +41,7 @@ export default function Profile() {
       <Tilt
         glareEnable={true}
         glareMaxOpacity={0.5}
-        className="h-full w-[47%] flex flex-col justify-center rounded-box items-center m-2 mask mask-hexagon"
+        className=" h-full w-[47%] flex flex-col justify-center rounded-box items-center m-2 mask mask-hexagon"
       >
         <img
           className="mask mask-hexagon outline-offset-2 outline-success"

@@ -16,6 +16,11 @@ function Login() {
     rememberMe: false,
     admin: false,
   });
+  const [Errors, setErrors] = useState({
+    email: false,
+    password: false,
+  });
+
   const handleChange = (event) => {
     setLoginUser({
       ...LoginUser,
@@ -70,10 +75,53 @@ function Login() {
     }));
   };
 
+  const validate = (event) => {
+    const field = event.target.name;
+    const value = event.target.value;
+    switch (field) {
+      case "email": {
+        if (
+          value === "" ||
+          !value.match(/^([A-z0-9]+)*(@\w+)*([.com, .org])+$/)
+        )
+          setErrors({
+            ...Errors,
+            [field]: true,
+            emailtouched: true,
+          });
+        else
+          setErrors({
+            ...Errors,
+            [field]: false,
+            emailtouched: true,
+          });
+        break;
+      }
+      case "password": {
+        if (value === "" || value.length < 8 || value.length > 36)
+          setErrors({
+            ...Errors,
+            [field]: true,
+            passwordtouched: true,
+          });
+        else
+          setErrors({
+            ...Errors,
+            [field]: false,
+            passwordtouched: true,
+          });
+        break;
+      }
+      default:
+        break;
+    }
+  };
+
   const asf = "#00df9a";
   return (
     <div className="flex justify-center items-start h-screen w-screen overflow-hidden lg:items-center ">
       <Tilt
+        tiltEnable={false}
         scale={1.02}
         perspective={3000}
         glareEnable={true}
@@ -83,14 +131,18 @@ function Login() {
         className="flex flex-col flex-wrap justify-evenly mt-20
          items-center rounded-3xl h-[78%] w-5/6 top-2 lg:h-5/6 lg:w-5/6 bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-30 border lg:flex-row overflow-hidden md:overflow-auto scrollbar-hide"
       >
-        <div className="w-full mt-6 h-1/5 lg:h-full lg:w-2/6 flex justify-center lg:flex-col lg:justify-center items-center gap-4 overflow-hidden">
+        <Tilt
+          scale={1.02}
+          perspective={3000}
+          className="w-full mt-6 h-1/5 lg:h-full lg:w-2/6 flex justify-center lg:flex-col lg:justify-center items-center gap-4 overflow-hidden"
+        >
           <svg
             width="120"
             height="150"
             viewBox="0 0 197 227"
             fill="linear-gradient(to top, #c31432, #240b36);"
             xmlns="http://www.w3.org/2000/svg"
-            className=" w-1/2"
+            className=" w-1/3 lg:w-1/2 "
           >
             <path
               fillRule="evenodd"
@@ -102,7 +154,9 @@ function Login() {
             />
           </svg>
           <div className="flex flex-col w-1/2 items-center justify-center ">
-            <div className="font-light text-5xl text-white">Let's Collab</div>
+            <div className="font-light lg:text-5xl text-white text-4xl">
+              Let's Collab
+            </div>
             {/* <div className="flex justify-center gap-1 w-full"> */}
             <div className="font-extralight text-white text-2xl pt-4">
               <div>A Platform made </div>
@@ -115,32 +169,52 @@ function Login() {
               />
             </div>
           </div>
-        </div>
+        </Tilt>
         <div className="font-normal text-4xl flex flex-col items-center overflow-hidden w-full h-3/4 lg:justify-center lg:items-center lg:flex-row lg:w-3/6 lg:h-full ">
           <div className="h-4/5 w-4/5 mt-4 flex flex-col justify-center">
             <form>
               <div className="flex flex-col items-center justify-center">
-                <label className="text-white font-extralight text-2xl pl-6 pb-2 self-start">
+                <label className="text-white font-light text-2xl pl-6 pb-2 self-start">
                   Email:
                 </label>
                 <input
                   type="text"
-                  className="bg-transparent border border-white rounded-full w-11/12 h-10 shrink text-white text-xl font-extralight pl-4  focus:outline-none focus:ring focus:border-blue-500 focus:border-0  pb-1 overflow-scroll"
+                  className={`bg-transparent border border-white rounded-full w-11/12 h-10 shrink text-white text-xl font-extralight pl-4  focus:outline-none focus:ring focus:border-blue-500 focus:border-0  pb-1 overflow-scroll
+                  ${
+                    Errors.email &&
+                    (Errors.email
+                      ? "ring ring-red-800 border-0 outline-none "
+                      : "ring ring-green-500 border-0 outline-none ")
+                  }}`}
+                  placeholder={`${
+                    Errors.email && Errors.email === "" ? "Required" : ""
+                  }`}
                   name="email"
                   onChange={handleChange}
                   value={LoginUser.email}
+                  onBlur={validate}
                 ></input>
               </div>
               <div className="flex flex-col items-center py-2">
-                <label className="text-white font-extralight text-2xl pl-6 pb-2 self-start">
+                <label className="text-white font-light text-2xl pl-6 pb-2 self-start">
                   Password:
                 </label>
                 <input
                   type="Password"
-                  className="bg-transparent border border-white rounded-full w-11/12 h-10 shrink text-white text-xl font-extralight pl-4 focus:outline-none focus:ring focus:border-blue-500 focus:border-0 pb-1"
+                  className={`bg-transparent border border-white rounded-full w-11/12 h-10 shrink text-white text-xl font-extralight pl-4 focus:outline-none focus:ring focus:border-blue-500 focus:border-0 pb-1
+                  ${
+                    Errors.password &&
+                    (Errors.password
+                      ? "ring ring-red-800 border-0 outline-none "
+                      : "ring ring-green-500 border-0 outline-none ")
+                  }}`}
+                  placeholder={`${
+                    Errors.password && Errors.password === "" ? "Required" : ""
+                  }`}
                   name="password"
                   onChange={handleChange}
                   value={LoginUser.password}
+                  onBlur={validate}
                 ></input>
               </div>
 
@@ -182,6 +256,13 @@ function Login() {
                   type="button"
                   className="btn btn-outline btn-success rounded-full mt-4 w-11/12  text-white font-extralight text-2xl py-1 px-5 pb-2"
                   // className="btn btn-outline btn-success rounded-full w-36 mt-4"
+                  disabled={
+                    Errors.email || Errors.password
+                      ? true
+                      : Errors.emailtouched || Errors.passwordtouched
+                      ? false
+                      : true
+                  }
                   onClick={() => {
                     handleSubmit();
                   }}
