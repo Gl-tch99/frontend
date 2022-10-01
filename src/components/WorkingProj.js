@@ -133,7 +133,7 @@ export default function WorkingProj({ handleRerender }) {
                 </div>
               </div>
             );
-          } else return <div></div>;
+          } else return <div key={index}></div>;
         })}
     </>
   );

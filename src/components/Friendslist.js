@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { UserContext } from "../App";
 import {
   IoIosCheckmarkCircleOutline,
@@ -9,8 +9,12 @@ import Tilt from "react-parallax-tilt";
 import uuid from "react-uuid";
 import emailjs from "@emailjs/browser";
 import Chat from "./Chat";
+import { io } from "socket.io-client";
+
 export default function Friendslist({ setChatProp }) {
   const { LoggedIn, setLoggedIn, User, setUser } = useContext(UserContext);
+  const [CurrentFriend, setCurrentFriend] = useState("");
+  // const socket = useRef(io("ws://localhost:8900"));
 
   const handleSendEmail = async (event, friend) => {
     const templateparams = {
@@ -31,6 +35,12 @@ export default function Friendslist({ setChatProp }) {
     );
     console.log(templateparams);
   };
+
+  // useEffect(() => {
+  //   socket.on("connect", () => {
+  //     console.log(socket.id); // x8WIv7-mJelg7on_ALbx
+  //   });
+  // }, []);
 
   return (
     <>
@@ -53,6 +63,7 @@ export default function Friendslist({ setChatProp }) {
                       // className="w-[58%] h-full flex flex-col justify-center"
                       onClick={() => {
                         console.log(friend);
+                        setCurrentFriend(friend);
                         // setChatProp(false);
                       }}
                     >
@@ -94,8 +105,8 @@ export default function Friendslist({ setChatProp }) {
                   id="my-modal-3"
                   className="modal-toggle"
                 />
-                <div className="modal">
-                  <div className="modal-box relative">
+                <div className="modal ">
+                  <div className="modal-box relative bg-opacity-90 border">
                     <label
                       htmlFor="my-modal-3"
                       className="btn btn-sm btn-circle absolute right-2 top-2"
@@ -119,7 +130,7 @@ export default function Friendslist({ setChatProp }) {
                         </button>
                       </div>
                     </div> */}
-                    <Chat CurrFriend={friend} />
+                    <Chat CurrFriend={CurrentFriend} />
                   </div>
                 </div>
                 {/* ------------------------------------------------------------------------------------- */}

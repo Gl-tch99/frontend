@@ -90,7 +90,7 @@ export default function Friendreq({ handleRerender }) {
                   <div className="w-[58%] h-full flex flex-col justify-center">
                     <div>
                       <h2 className="card-title justify-start pl-8 text-white font-extralight ">
-                        {friend.lastname}
+                        {friend.firstname}
                       </h2>
                     </div>
                     <div>
