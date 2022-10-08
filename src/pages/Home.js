@@ -34,6 +34,25 @@ export default function Home() {
     console.log(result);
   }, [ReRender]);
 
+  const handleJoin = async (project) => {
+    await axios
+      .put("http://localhost:3000/users/joinproj", {
+        headers: {
+          authorization: "Bearer " + localStorage.token,
+        },
+        data: {
+          project,
+        },
+      })
+      .then((res) => {
+        console.log(res);
+        setUser(res.data._doc);
+      })
+      .catch((err) => {
+        console.log("Error" + err);
+      });
+  };
+
   const handleSearch = async () => {
     await axios
       .post("http://localhost:3000/projects/search", {
@@ -46,9 +65,9 @@ export default function Home() {
       })
       .then((response) => {
         console.log(response.data);
-        const users = response.data;
-        console.log(users);
-        setSearchResult(users);
+        const projects = response.data;
+        console.log(projects);
+        setSearchResult(projects);
       })
       .catch((error) => console.log(error));
   };
@@ -219,7 +238,60 @@ export default function Home() {
           <div className="border w-full h-[77%] rounded-3xl flex flex-col justify-start items-center">
             {/* --------------------------------------------------------------------------------------------------------------------- */}
             <div className="w-[96%] h-[98%] rounded-3xl flex flex-col shrink-0 justify-start gap-2 items-center mt-2 pt-2 py-2 overflow-scroll scrollbar-hide">
-              <Projects handleRerender={handleRerender} />
+              {SearchResult.length !== 0 ? (
+                <>
+                  {SearchResult.length !== 0
+                    ? SearchResult.map((project, index) => {
+                        if (
+                          project.status === "Listed" ||
+                          project.status === "Working"
+                        )
+                          return (
+                            <Tilt
+                              glareEnable={true}
+                              glareMaxOpacity={1}
+                              scale={0.95}
+                              perspective={3000}
+                              tiltMaxAngleY={8}
+                              tiltMaxAngleX={8}
+                              className="card w-full h-[24%] bg-transparent shadow-xl shrink-0 border "
+                              key={index}
+                            >
+                              <div className=" flex justify-evenly h-full ">
+                                <div className=" w-[70%] mt-4">
+                                  <h2 className="card-title text-white ml-4 text-3xl font-extralight ">
+                                    {project.name}
+                                  </h2>
+                                  <p className="card-title text-white ml-4 text-lg font-extralight ">
+                                    Description: {project.description}
+                                  </p>
+                                  <p className="card-title text-white ml-4 text-lg font-extralight ">
+                                    Technologies Reqired: {project.technologies}
+                                  </p>
+                                  <p className="card-title text-white ml-4 text-lg font-extralight ">
+                                    Status: {project.status}
+                                  </p>
+                                </div>
+                                <div className="self-end w-[25%] flex justify-end ">
+                                  <button
+                                    className="btn btn-outline btn-success rounded-full w-36 mt-4 text-xl font-extralight self-end mb-4 mr-2"
+                                    onClick={() => {
+                                      handleJoin(project);
+                                      handleRerender();
+                                    }}
+                                  >
+                                    Join
+                                  </button>
+                                </div>
+                              </div>
+                            </Tilt>
+                          );
+                      })
+                    : ""}
+                </>
+              ) : (
+                <Projects handleRerender={handleRerender} />
+              )}
             </div>
             {/* --------------------------------------------------------------------------------------------------------------------- */}
           </div>

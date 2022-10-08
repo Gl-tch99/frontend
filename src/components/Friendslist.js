@@ -83,7 +83,7 @@ export default function Friendslist({ setChatProp }) {
                       <label
                         htmlFor="my-modal-4"
                         className="btn modal-button"
-                        value={friend}
+                        // value={friend}
                       >
                         <ImProfile size={20} />
                       </label>
